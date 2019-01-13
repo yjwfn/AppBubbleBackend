@@ -1,12 +1,10 @@
 server:
   port: 8080
 
-debug: true
-
 # Spring
 spring:
-  application:
-    name: AppBubbleSmsService
+#  application:
+#    name: AppBubbleSmsService
 
   messages:
     basename: i18n/messages
@@ -14,7 +12,7 @@ spring:
 
 # Apollo
 app:
- id: AppBubbleSmsService
+ id: 1547393624
 
 apollo:
  bootstrap:

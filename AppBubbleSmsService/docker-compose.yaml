@@ -1,0 +1,34 @@
+#run --rm --network apollo_default -e ENV=dev --link apollo_apollo-configservice-dev_1:apollo-configservice bubble/sms-service:0.0.1-SNAPSHOT
+version: "3"
+services:
+ redis-dev:
+  image: redis
+  networks:
+     apollo_default: {}
+
+ mysql-dev:
+  image: mysql
+  environment:
+   - MYSQL_ROOT_PASSWORD=123456
+  networks:
+   apollo_default: {}
+
+ sms:
+#  image: bubble/sms:latest
+  build:
+    context: ./
+    args:
+     JAR_FILE: "sms-0.0.1-SNAPSHOT.jar"
+  environment:
+   APOLLO_META: "http://apollo-configservice-dev:8080"
+  networks:
+     apollo_default: {}
+  expose:
+   - "8080"
+  ports:
+   - "8088:8080"
+
+networks:
+  apollo_default:
+#   name: apollo
+   external: true

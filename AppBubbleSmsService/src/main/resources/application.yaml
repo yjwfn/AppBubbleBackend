@@ -1,0 +1,30 @@
+server:
+  port: 8080
+
+debug: true
+
+# Spring
+spring:
+  application:
+    name: AppBubbleSmsService
+
+  messages:
+    basename: i18n/messages
+    encoding: UTF-8
+
+# Apollo
+app:
+ id: AppBubbleSmsService
+
+apollo:
+ bootstrap:
+  enabled: true
+  namespaces: application
+
+
+# Mybatis
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+
+
+

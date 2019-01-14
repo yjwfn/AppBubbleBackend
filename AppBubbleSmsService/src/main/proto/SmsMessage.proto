@@ -1,0 +1,34 @@
+syntax = "proto3";
+package sms;
+
+//option java_multiple_files = true;
+option java_package = "com.bubble.sms.grpc.message";
+option java_outer_classname = "SmsMessageProto";
+//option objc_class_prefix = "HLW";
+
+message SendSms {
+    string phone = 1;
+    string phoneExt = 2;
+}
+
+message SmsToken {
+    string token = 1;
+}
+
+
+message FindSmsRecord {
+    string phoneExt = 1;
+    string phone = 2;
+    string token = 3;
+}
+
+message SmsRecord{
+    string phoneExt = 1;
+    string phone = 2;
+    //短信验证码
+    string code = 3;
+    //短信TOKEN
+    string token = 4 ;
+    //记录短信发送时间
+    int64 sendTime = 5;
+}

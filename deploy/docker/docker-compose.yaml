@@ -1,5 +1,5 @@
-#run --rm --network apollo_default -e ENV=dev --link apollo_apollo-configservice-dev_1:apollo-configservice bubble/sms-service:0.0.1-SNAPSHOT
-# update ServerConfig set Value='http://apollo-configservice.apollo:8080/eureka/' where `key`='eureka.service.url'
+#
+# update ServerConfig set Value='http://apollo-configservice-dev:8080/eureka/' where `key`='eureka.service.url'
 version: "3"
 services:
  redis-dev:
@@ -55,9 +55,9 @@ services:
 #========== Sms Service ===============
  sms:
   build:
-    context: /Users/yjwfn/development/web-project/AppBubbleBackend/AppBubbleSmsService
+    context: ../../AppBubbleSmsService
     args:
-     APP_JAR_FILE: "sms-0.0.1-SNAPSHOT.jar"
+     APP_JAR_FILE: "app.jar"
   environment:
    APOLLO_META: "http://apollo-configservice-dev:8080"
    ENV: dev

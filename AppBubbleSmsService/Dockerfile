@@ -2,6 +2,6 @@
 FROM openjdk:8-jre
 EXPOSE 8080
 ARG APP_JAR_FILE
-RUN mkdir /grpc
+RUN mkdir /bubble
 ADD "target/${APP_JAR_FILE}" /bubble/app.jar
 ENTRYPOINT ["java", "-jar" , "/bubble/app.jar"]

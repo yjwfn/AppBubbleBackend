@@ -1,5 +1,6 @@
 syntax = "proto3";
 import "SmsMessage.proto";
+import "google/api/annotations.proto";
 
 package sms;
 
@@ -9,9 +10,18 @@ option java_outer_classname = "SmsServiceProto";
 service SmsService {
 
     //发送注册验证码
-    rpc sendRegistrySms(SendSms) returns (SmsToken) {}
+    rpc sendRegistrySms(SendSms) returns (SmsToken) {
+        option (google.api.http) = {
+            post: "/api/v1/sms"
+            body: "*"
+        };
+    }
 
     //查找短信发送记录
-    rpc findRecordByPhoneExtAndPhoneAndToken(FindSmsRecord) returns (SmsRecord) {};
+    rpc findRecordByPhoneExtAndPhoneAndToken(FindSmsRecord) returns (SmsRecord) {
+        option (google.api.http) = {
+            get: "/api/v1/sms/{token}"
+        };
+    };
 
 }

@@ -20,8 +20,9 @@
 
     <properties>
         <java.version>1.8</java.version>
-        <jarName>${artifactId}-${version}</jarName>
+        <jarName>${project.artifactId}-${project.version}</jarName>
         <grpc.version>1.17.1</grpc.version>
+        <GOPATH>/Users/yjwfn/go</GOPATH>
     </properties>
 
     <profiles>
@@ -127,6 +128,10 @@
                     <protocArtifact>com.google.protobuf:protoc:3.5.1-1:exe:${os.detected.classifier}</protocArtifact>
                     <pluginId>grpc-java</pluginId>
                     <pluginArtifact>io.grpc:protoc-gen-grpc-java:1.17.1:exe:${os.detected.classifier}</pluginArtifact>
+                    <additionalProtoPathElements>
+                        <additionalProtoPathElement>${GOPATH}/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis</additionalProtoPathElement>
+                        <additionalProtoPathElement>${GOPATH}/src</additionalProtoPathElement>
+                    </additionalProtoPathElements>
                 </configuration>
                 <executions>
                     <execution>

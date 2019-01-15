@@ -123,6 +123,18 @@ public class YunpianSmsAipService implements SmsService,DisposableBean {
         return null;
     }
 
+    @Override
+    public SmsRecord findRecordByToken(String token) {
+        Optional<SmsRecordEntity> smsRecordEntityOptional = smsDao.findById(token);
+        if(smsRecordEntityOptional.isPresent()){
+            SmsRecordEntity entity = smsRecordEntityOptional.get();
+            if (Objects.equals(token, entity.getToken())) {
+                return new SmsRecord(entity.getPhoneExt(), entity.getPhone(), entity.getCode(), entity.getToken(), entity.getSendTime());
+            }
+        }
+
+        return null;
+    }
 
     @Override
     public void destroy() throws Exception {

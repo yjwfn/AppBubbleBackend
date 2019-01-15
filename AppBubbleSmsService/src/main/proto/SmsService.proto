@@ -18,10 +18,10 @@ service SmsService {
     }
 
     //查找短信发送记录
-    rpc findRecordByPhoneExtAndPhoneAndToken(FindSmsRecord) returns (SmsRecord) {
+    rpc findRecordByToken(SmsToken) returns (SmsRecord) {
         option (google.api.http) = {
             get: "/api/v1/sms/{token}"
         };
-    };
+    }
 
 }

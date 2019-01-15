@@ -21,9 +21,11 @@ public class GrpcSmsServiceImpl extends SmsServiceGrpc.SmsServiceImplBase {
         responseObserver.onCompleted();
     }
 
+
+
     @Override
-    public void findRecordByPhoneExtAndPhoneAndToken(SmsMessageProto.FindSmsRecord request, StreamObserver<SmsMessageProto.SmsRecord> responseObserver) {
-        SmsRecord smsRecord = smsService.findRecordByPhoneExtAndPhoneAndToken(request.getPhoneExt(), request.getPhone(), request.getToken());
+    public void findRecordByToken(SmsMessageProto.SmsToken request, StreamObserver<SmsMessageProto.SmsRecord> responseObserver) {
+        SmsRecord smsRecord = smsService.findRecordByToken(request.getToken());
         SmsMessageProto.SmsRecord response = SmsMessageProto.SmsRecord.newBuilder()
                 .setCode(smsRecord.getCode())
                 .setPhone(smsRecord.getPhone())

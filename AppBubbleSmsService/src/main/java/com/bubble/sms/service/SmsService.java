@@ -25,4 +25,12 @@ public interface SmsService {
      */
     SmsRecord findRecordByPhoneExtAndPhoneAndToken(@Nullable String phoneExt, String mobile, String token)  ;
 
+
+    /**
+     * 使用{@code token}查找发送记录
+     * @param token
+     * @return
+     */
+    SmsRecord findRecordByToken(String token);
+
 }

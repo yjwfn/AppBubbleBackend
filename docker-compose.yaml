@@ -10,7 +10,7 @@ services:
   environment:
    - MYSQL_ROOT_PASSWORD=123456
   volumes:
-      - ../sql:/sql
+      - ./scripts/sql:/sql
 
 #========== Apollo ===============
  apollo-configservice-dev:
@@ -55,11 +55,17 @@ services:
 #========== Sms Service ===============
  sms:
   build:
-    context: ../../AppBubbleSmsService
+    context: ./
+    dockerfile: scripts/docker/Dockerfile
     args:
-     APP_JAR_FILE: "app.jar"
+      APP_PROJECT_NAME: "AppBubbleSmsService"
   environment:
    APOLLO_META: "http://apollo-configservice-dev:8080"
+   APP_PROJECT_NAME: "AppBubbleSmsService"
+   APP_PROTO_PACKAGE: sms
+   APP_GATEWAY_SERVICE: SmsService
+
+
    ENV: dev
   expose:
    - "8080"

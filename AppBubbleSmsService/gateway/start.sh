@@ -20,13 +20,15 @@ mkdir -p ${swaggerOut}
 protoc -I/usr/local/include \
     -I${serviceDir}   -I$GOPATH/src  \
     -I$GOPATH/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis \
-    --grpc-gateway_out=logtostderr=true:${goOut} ${serviceDir}/SmsService.proto
+    --grpc-gateway_out=logtostderr=true:${goOut} \
+    ${serviceDir}/SmsService.proto ${serviceDir}/SmsMessage.proto
 
 # Generate reverse-proxy
 protoc -I/usr/local/include -I${serviceDir} \
   -I$GOPATH/src \
     -I$GOPATH/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis  \
-     --go_out=plugins=grpc:${goOut}  ${serviceDir}/SmsService.proto
+     --go_out=plugins=grpc:${goOut}  \
+     ${serviceDir}/SmsService.proto ${serviceDir}/SmsMessage.proto
 
 # (Optional) Generate swagger definitions
 protoc -I/usr/local/include -I${serviceDir}  \

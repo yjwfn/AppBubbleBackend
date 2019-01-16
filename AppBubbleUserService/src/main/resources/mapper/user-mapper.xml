@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bubble.user.dao.UserDao" >
+    <sql id="columns">
+      `guid`,
+      `username`,
+      `avatarUrl`,
+      `nickName`,
+      `phone`,
+      `phoneExt`,
+      `email`,
+      `gender`,
+      `password`,
+      `passwordSalt`,
+      `selfSignature`,
+      `birthday`,
+      `status`,
+      `country`,
+      `state`,
+      `city`
+    </sql>
+
+    <sql id="columnsWithoutPassword">
+        `guid`,
+        `username`,
+        `avatarUrl`,
+        `nickName`,
+        `phone`,
+        `phoneExt`,
+        `email`,
+        `gender`,
+        `selfSignature`,
+        `birthday`,
+        `status`,
+        `country`,
+        `state`,
+        `city`
+    </sql>
+
+    <select id="countByPhoneExtAndPhone" resultType="long">
+      SELECT COUNT(ID) FROM user WHERE phone=#{phone} AND phoneExt=#{phoneExt}
+    </select>
+    <select id="countById" resultType="long">
+      SELECT COUNT(ID) FROM user WHERE id=#{userId}
+    </select>
+    <select id="findByNickNameLike" resultType="com.bubble.user.entity.UserEntity">
+      SELECT <include refid="columnsWithoutPassword"/> FROM user WHERE nickName=${nickName}
+    </select>
+    <select id="findById" resultType="com.bubble.user.entity.UserEntity">
+        SELECT <include refid="columnsWithoutPassword"/> FROM user WHERE guid=${id}
+    </select>
+    <select id="findByPhoneExtAndPhone" resultType="com.bubble.user.entity.UserEntity">
+        SELECT <include refid="columnsWithoutPassword"/>  FROM user WHERE phone=#{phone} AND phoneExt=#{phoneExt}
+    </select>
+    <select id="findByPhoneIn" resultType="com.bubble.user.entity.UserEntity">
+        SELECT <include refid="columnsWithoutPassword"/>  FROM user WHERE phone in #{phone}
+    </select>
+
+    <select id="findByIdIn" resultType="com.bubble.user.entity.UserEntity">
+        SELECT <include refid="columnsWithoutPassword"/>  FROM user WHERE id in #{ids}
+    </select>
+</mapper>

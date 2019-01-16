@@ -48,4 +48,19 @@
 
 	</dependencies>
 
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.xolstice.maven.plugins</groupId>
+				<artifactId>protobuf-maven-plugin</artifactId>
+				<configuration>
+					<!--<additionalProtoPathElements>-->
+						<!--<additionalProtoPathElement>${protos.basedir}/user</additionalProtoPathElement>-->
+					<!--</additionalProtoPathElements>-->
+
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
 </project>

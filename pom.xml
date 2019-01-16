@@ -22,6 +22,8 @@
         <java.version>1.8</java.version>
         <jarName>${project.artifactId}-${project.version}</jarName>
         <grpc.version>1.17.1</grpc.version>
+        <protos.basedir>${project.basedir}/../protos</protos.basedir>
+        <GOPATH>${HOME}/go</GOPATH>
     </properties>
 
     <profiles>
@@ -112,6 +114,35 @@
             </extension>
         </extensions>
 
+        <pluginManagement>
+            <plugins>
+
+                <plugin>
+                    <groupId>org.xolstice.maven.plugins</groupId>
+                    <artifactId>protobuf-maven-plugin</artifactId>
+                    <version>0.5.1</version>
+                    <configuration >
+                        <protocArtifact>com.google.protobuf:protoc:3.5.1-1:exe:${os.detected.classifier}</protocArtifact>
+                        <pluginId>grpc-java</pluginId>
+                        <pluginArtifact>io.grpc:protoc-gen-grpc-java:1.17.1:exe:${os.detected.classifier}</pluginArtifact>
+                        <additionalProtoPathElements combine.children="append" combine.self="append">
+                            <additionalProtoPathElement>${GOPATH}/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis</additionalProtoPathElement>
+                            <additionalProtoPathElement>${GOPATH}/src</additionalProtoPathElement>
+                        </additionalProtoPathElements>
+                        <protoSourceRoot>${protos.basedir}</protoSourceRoot>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>compile</goal>
+                                <goal>compile-custom</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -124,22 +155,14 @@
                 <artifactId>protobuf-maven-plugin</artifactId>
                 <version>0.5.1</version>
                 <configuration>
-                    <protocArtifact>com.google.protobuf:protoc:3.5.1-1:exe:${os.detected.classifier}</protocArtifact>
-                    <pluginId>grpc-java</pluginId>
-                    <pluginArtifact>io.grpc:protoc-gen-grpc-java:1.17.1:exe:${os.detected.classifier}</pluginArtifact>
-                    <additionalProtoPathElements>
-                        <additionalProtoPathElement>${GOPATH}/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis</additionalProtoPathElement>
-                        <additionalProtoPathElement>${GOPATH}/src</additionalProtoPathElement>
-                    </additionalProtoPathElements>
+                    <!--<additionalProtoPathElements>-->
+                        <!--<additionalProtoPathElement>${protos.basedir}/${project.artifactId}</additionalProtoPathElement>-->
+                    <!--</additionalProtoPathElements>-->
+                    <includes>
+                        <include>${project.artifactId}/*.proto</include>
+                    </includes>
+
                 </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>compile</goal>
-                            <goal>compile-custom</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
 

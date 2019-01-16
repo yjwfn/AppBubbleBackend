@@ -6,6 +6,7 @@ EXPOSE 8090
 ARG APP_PROJECT_NAME
 #复制父pom.xml
 ADD /pom.xml /app/pom.xml
+ADD /protos /app/protos
 ADD $APP_PROJECT_NAME /app/$APP_PROJECT_NAME
 ADD scripts/gateway /app/gateway
 ADD scripts/docker/entrypoint.sh /app/entrypoint.sh

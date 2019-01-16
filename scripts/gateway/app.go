@@ -9,7 +9,7 @@ import (
   "github.com/grpc-ecosystem/grpc-gateway/runtime"
   "google.golang.org/grpc"
 
-  gw "./${APP_PROTO_PACKAGE}"
+  gw "${APP_PROTO_PACKAGE}"
 )
 
 

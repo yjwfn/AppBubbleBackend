@@ -155,13 +155,9 @@
                 <artifactId>protobuf-maven-plugin</artifactId>
                 <version>0.5.1</version>
                 <configuration>
-                    <!--<additionalProtoPathElements>-->
-                        <!--<additionalProtoPathElement>${protos.basedir}/${project.artifactId}</additionalProtoPathElement>-->
-                    <!--</additionalProtoPathElements>-->
                     <includes>
                         <include>${project.artifactId}/*.proto</include>
                     </includes>
-
                 </configuration>
             </plugin>
         </plugins>

@@ -54,10 +54,10 @@
 				<groupId>org.xolstice.maven.plugins</groupId>
 				<artifactId>protobuf-maven-plugin</artifactId>
 				<configuration>
-					<!--<additionalProtoPathElements>-->
-						<!--<additionalProtoPathElement>${protos.basedir}/user</additionalProtoPathElement>-->
-					<!--</additionalProtoPathElements>-->
-
+					<includes>
+						<include>${project.artifactId}/*.proto</include>
+						<include>user/*.proto</include>
+					</includes>
 				</configuration>
 			</plugin>
 		</plugins>

@@ -6,6 +6,9 @@ option java_package = "com.bubble.sms.grpc.message";
 option java_outer_classname = "SmsMessageProto";
 //option objc_class_prefix = "HLW";
 
+import "user/UserMessage.proto";
+
+
 message SendSms {
     string phone = 1;
     string phoneExt = 2;
@@ -20,6 +23,8 @@ message FindSmsRecord {
     string phoneExt = 1;
     string phone = 2;
     string token = 3;
+    user.UserGuid userGuid = 4;
+
 }
 
 message SmsRecord{

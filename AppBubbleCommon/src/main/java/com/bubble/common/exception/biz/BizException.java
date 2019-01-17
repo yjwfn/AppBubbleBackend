@@ -2,22 +2,15 @@ package com.bubble.common.exception.biz;
 
 public class BizException extends Exception{
 
-    public BizException() {
-    }
+    private int status;
 
-    public BizException(String message) {
+    public BizException(int status, String message){
         super(message);
     }
 
-    public BizException(String message, Throwable cause) {
+    public BizException(int status, String message, Throwable cause){
         super(message, cause);
+        this.status = status;
     }
 
-    public BizException(Throwable cause) {
-        super(cause);
-    }
-
-    public BizException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-        super(message, cause, enableSuppression, writableStackTrace);
-    }
 }

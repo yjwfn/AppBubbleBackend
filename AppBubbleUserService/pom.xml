@@ -9,7 +9,6 @@
 		<relativePath>../</relativePath>
 	</parent>
 
-	<groupId>com.bubble</groupId>
 	<artifactId>user</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>user</name>
@@ -84,6 +83,18 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+
+			<!-- ProtoBuf plugin-->
+			<plugin>
+				<groupId>org.xolstice.maven.plugins</groupId>
+				<artifactId>protobuf-maven-plugin</artifactId>
+				<configuration>
+					<includes>
+						<include>${project.artifactId}/*.proto</include>
+						<include>user/*.proto</include>
+					</includes>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

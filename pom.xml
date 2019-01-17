@@ -39,11 +39,7 @@
     </profiles>
 
     <dependencies>
-        <dependency>
-            <groupId>com.bubble</groupId>
-            <artifactId>common</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
+
 
 
     </dependencies>
@@ -98,6 +94,12 @@
                 <version>2.6</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.bubble</groupId>
+                <artifactId>common</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
@@ -140,24 +142,6 @@
             </plugins>
         </pluginManagement>
 
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-
-            <!-- ProtoBuf plugin-->
-            <plugin>
-                <groupId>org.xolstice.maven.plugins</groupId>
-                <artifactId>protobuf-maven-plugin</artifactId>
-                <version>0.5.1</version>
-                <configuration>
-                    <includes>
-                        <include>${project.artifactId}/*.proto</include>
-                    </includes>
-                </configuration>
-            </plugin>
-        </plugins>
 
     </build>
 

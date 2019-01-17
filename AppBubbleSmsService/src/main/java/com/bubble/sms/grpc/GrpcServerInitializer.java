@@ -1,8 +1,11 @@
 package com.bubble.sms.grpc;
 
+import com.google.rpc.Status;
 import io.grpc.BindableService;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
+import io.grpc.protobuf.StatusProto;
+import io.grpc.util.TransmitStatusRuntimeExceptionInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
@@ -32,8 +35,8 @@ public class GrpcServerInitializer implements ApplicationRunner {
                 serverBuilder.addService(bindableService);
             }
         }
-
         Server server = serverBuilder.build();
+        serverBuilder.intercept(TransmitStatusRuntimeExceptionInterceptor.instance());
         server.start();
         startDaemonAwaitThread(server);
     }

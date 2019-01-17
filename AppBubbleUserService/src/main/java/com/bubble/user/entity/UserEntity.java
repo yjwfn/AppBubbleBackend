@@ -1,7 +1,5 @@
 package com.bubble.user.entity;
 
-import java.util.List;
-
 /**
 *用户
 */

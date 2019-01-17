@@ -2,6 +2,7 @@ package com.bubble.user.dao;
 
 
 import com.bubble.user.entity.UserEntity;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.lang.Nullable;
 
 import java.util.List;
@@ -16,7 +17,7 @@ public interface UserDao {
      * @param phone 手机号
      * @return
      */
-    long countByPhoneExtAndPhone( String phoneExt, String phone);
+    long countByPhoneExtAndPhone(@Param("phoneExt") String phoneExt, @Param("phone") String phone);
 
     /**
      * 统计用户数量

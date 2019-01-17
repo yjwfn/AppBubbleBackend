@@ -1,2 +1,4 @@
 mybatis:
   mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.bubble.user.entity
+

@@ -37,26 +37,27 @@
         `city`
     </sql>
 
+
     <select id="countByPhoneExtAndPhone" resultType="long">
       SELECT COUNT(ID) FROM user WHERE phone=#{phone} AND phoneExt=#{phoneExt}
     </select>
     <select id="countById" resultType="long">
       SELECT COUNT(ID) FROM user WHERE id=#{userId}
     </select>
-    <select id="findByNickNameLike" resultType="com.bubble.user.entity.UserEntity">
+    <select id="findByNickNameLike" resultType="userEntity">
       SELECT <include refid="columnsWithoutPassword"/> FROM user WHERE nickName=${nickName}
     </select>
-    <select id="findById" resultType="com.bubble.user.entity.UserEntity">
+    <select id="findById" resultType="userEntity">
         SELECT <include refid="columnsWithoutPassword"/> FROM user WHERE guid=${id}
     </select>
-    <select id="findByPhoneExtAndPhone" resultType="com.bubble.user.entity.UserEntity">
+    <select id="findByPhoneExtAndPhone" resultType="userEntity">
         SELECT <include refid="columnsWithoutPassword"/>  FROM user WHERE phone=#{phone} AND phoneExt=#{phoneExt}
     </select>
-    <select id="findByPhoneIn" resultType="com.bubble.user.entity.UserEntity">
+    <select id="findByPhoneIn" resultType="userEntity">
         SELECT <include refid="columnsWithoutPassword"/>  FROM user WHERE phone in #{phone}
     </select>
 
-    <select id="findByIdIn" resultType="com.bubble.user.entity.UserEntity">
+    <select id="findByIdIn" resultType="userEntity">
         SELECT <include refid="columnsWithoutPassword"/>  FROM user WHERE id in #{ids}
     </select>
 </mapper>

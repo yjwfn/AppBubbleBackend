@@ -30,7 +30,7 @@ static_resources:
          http_filters:
          - name: envoy.grpc_json_transcoder
            config:
-             proto_descriptor: "/app/protobuf/AppBubbleSmsService.protobin"
+             proto_descriptor: "/app/app.protobin"
              services: ["sms.SmsService"]
              match_incoming_request_route: true
              print_options:

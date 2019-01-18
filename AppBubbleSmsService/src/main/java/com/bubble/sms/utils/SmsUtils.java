@@ -15,6 +15,6 @@ public class SmsUtils {
         for (int i = 0; i < 4; i++) {
             vcode.append((int) (Math.random() * 10));
         }
-        return vcode.toString();
+        return "1234" ; //vcode.toString();
     }
 }

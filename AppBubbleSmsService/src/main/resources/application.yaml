@@ -8,12 +8,14 @@ grpc:
 
 # Spring
 spring:
-#  application:
-#    name: AppBubbleSmsService
-
+  application:
+    name: AppBubbleSmsService
   messages:
     basename: i18n/messages
     encoding: UTF-8
+  redis:
+    host: redis-dev
+
 
 # Apollo
 app:

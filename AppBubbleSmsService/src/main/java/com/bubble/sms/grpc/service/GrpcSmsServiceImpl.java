@@ -16,7 +16,7 @@ public class GrpcSmsServiceImpl extends SmsServiceGrpc.SmsServiceImplBase {
 
     @Override
     public void sendRegistrySms(SmsMessageProto.SendSms request, StreamObserver<SmsMessageProto.SmsToken> responseObserver) {
-        String token = smsService.sendRegistrySms(request.getPhoneExt(), request.getPhoneExt());
+        String token = smsService.sendRegistrySms(request.getPhoneExt(), request.getPhone());
         responseObserver.onNext( SmsMessageProto.SmsToken.newBuilder().setToken(token).build());
         responseObserver.onCompleted();
     }

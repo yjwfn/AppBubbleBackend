@@ -1,7 +1,17 @@
 #
 # update ServerConfig set Value='http://apollo-configservice-dev:8080/eureka/' where `key`='eureka.service.url'
 version: "3"
+volumes:
+  protobuf:
 services:
+ envoy:
+  image: envoyproxy/envoy-build-ubuntu
+  volumes:
+    - ./scripts/envoy/envoy.yaml:/etc/envoy/envoy.yaml
+    - protobuf:/app/protobuf
+  ports:
+   - "8090:8090"
+
  redis-dev:
   image: redis
 
@@ -62,19 +72,19 @@ services:
   environment:
    APOLLO_META: "http://apollo-configservice-dev:8080"
    APP_PROJECT_NAME: "AppBubbleSmsService"
-   APP_PROTO_PACKAGE: sms
-   APP_GATEWAY_SERVICE: SmsService
-
-
    ENV: dev
+  volumes:
+    - protobuf:/app/protobuf
+
+
   expose:
    - "8080"
    - "8090"
   ports:
    - "8088:8080"
    - "8099:8090"
-  depends_on:
+#  depends_on:
 #   - "apollo-portal"
 #   - "mysql-dev"
-   - "redis-dev"
+#   - "redis-dev"
 

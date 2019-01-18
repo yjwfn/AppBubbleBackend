@@ -129,6 +129,8 @@
                             <additionalProtoPathElement>${GOPATH}/src</additionalProtoPathElement>
                         </additionalProtoPathElements>
                         <protoSourceRoot>${protos.basedir}</protoSourceRoot>
+                        <writeDescriptorSet>true</writeDescriptorSet>
+                        <includeDependenciesInDescriptorSet>true</includeDependenciesInDescriptorSet>
                     </configuration>
                     <executions>
                         <execution>

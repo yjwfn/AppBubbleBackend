@@ -1,4 +1,4 @@
-FROM rcntech/ubuntu-grpc:v0.0.4
+FROM rcntech/ubuntu-grpc:v0.0.5
 EXPOSE 8080
 EXPOSE 8090
 

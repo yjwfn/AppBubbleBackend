@@ -1,0 +1,46 @@
+admin:
+  access_log_path: /tmp/admin_access.log
+  address:
+    socket_address: { address: 0.0.0.0, port_value: 9901 }
+static_resources:
+ listeners:
+ - name: grpc-8090
+   address:
+     socket_address: { address: 0.0.0.0, port_value: 8090 }
+   filter_chains:
+   - filters:
+     - name: envoy.http_connection_manager
+       config:
+         stat_prefix: sms_http
+         codec_type: AUTO
+         route_config:
+           name: sms
+           virtual_hosts:
+           - name: sms
+             domains: ["*"]
+             routes:
+             - match: { prefix: "/sms.SmsService"  ,  grpc: {}}
+               route: { cluster: sms_services }
+         http_filters:
+         - name: envoy.grpc_json_transcoder
+           config:
+             proto_descriptor: "/app/protobuf/AppBubbleSmsService.protobin"
+             services: ["sms.SmsService"]
+#             match_incoming_request_route: true
+             print_options:
+              add_whitespace: true
+              always_print_primitive_fields: true
+              always_print_enums_as_ints: false
+              preserve_proto_field_names: false
+         - name: envoy.router
+#     - name: envoy.echo
+
+ clusters:
+ - name: sms_services
+   connect_timeout: 0.25s
+   type: LOGICAL_DNS
+   # Comment out the following line to test on v6 networks
+   dns_lookup_family: V4_ONLY
+   lb_policy: ROUND_ROBIN
+   hosts: [{ socket_address: { address: sms, port_value: 8090 }}]
+#   tls_context: { sni: www.baidu.com }

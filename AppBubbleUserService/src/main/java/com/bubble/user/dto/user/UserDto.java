@@ -38,7 +38,7 @@ public class UserDto implements Serializable {
 	//用户所在城市
 	private String city ;
 	//记录创建时间
-	private long createTime ;
+	private Long createTime ;
  
  	public void setId(Long  id){
 		this.id = id;
@@ -146,11 +146,11 @@ public class UserDto implements Serializable {
 		return this.city;
 	}
  
- 	public void setCreateTime(long  createTime){
+ 	public void setCreateTime(Long  createTime){
 		this.createTime = createTime;
 	}
 
-	public long getCreateTime(){
+	public Long getCreateTime(){
 		return this.createTime;
 	}
 

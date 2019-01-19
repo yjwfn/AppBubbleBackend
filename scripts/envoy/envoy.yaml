@@ -20,6 +20,10 @@ static_resources:
              domains: ["user"]
              routes:
              - match:
+                prefix: user.UserService
+               route:
+                cluster: user_services
+             - match:
                 prefix: "/api/v1/users"
                route:
                 cluster: user_services
@@ -52,7 +56,7 @@ static_resources:
 
  clusters:
  - name: sms_services
-   connect_timeout: 0.25s
+   connect_timeout: 5s
    type: LOGICAL_DNS
    dns_lookup_family: V4_ONLY
    lb_policy: ROUND_ROBIN
@@ -60,7 +64,7 @@ static_resources:
    hosts: [{ socket_address: { address: sms, port_value: 8090 }}]
 
  - name: user_services
-   connect_timeout: 0.25s
+   connect_timeout: 5s
    type: LOGICAL_DNS
    dns_lookup_family: V4_ONLY
    lb_policy: ROUND_ROBIN

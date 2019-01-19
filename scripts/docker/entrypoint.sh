@@ -6,7 +6,7 @@ export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
 rootProjectDir="/app"
 projectDir="${rootProjectDir}/${APP_PROJECT_NAME}"
 
-cd ${rootProjectDir}/AppBubbleCommon
+cd ${rootProjectDir}
 mvn clean install -DskipTests
 
 cd $projectDir

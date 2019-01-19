@@ -12,7 +12,7 @@ option java_outer_classname = "UserServiceProto";
 service UserService {
 
 
-    rpc registryUserWithPhone(RegistryWithPhone) returns (UserProfile) {
+    rpc registryUserWithPhone(user.RegistryWithPhone) returns (user.UserProfile) {
         option (google.api.http) = {
             post: "/api/v1/users"
             body: "*"

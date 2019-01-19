@@ -71,8 +71,6 @@ services:
    APOLLO_META: "http://apollo-configservice-dev:8080"
    APP_PROJECT_NAME: "AppBubbleSmsService"
    ENV: dev
-
-
   expose:
    - "8080"
    - "8090"

@@ -27,3 +27,12 @@ service SmsService {
     }
 
 }
+
+enum Status{
+  SUCCESS = 0;
+
+  /** 未找到短信验证码 */
+  VERIFICATION_CODE_NOT_FOUND = 1000;
+
+
+}

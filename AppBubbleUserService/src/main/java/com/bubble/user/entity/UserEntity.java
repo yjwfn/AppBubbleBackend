@@ -5,7 +5,7 @@ package com.bubble.user.entity;
 */
 public class UserEntity  {
 
-    private Long guid;
+    private Long id;
     //用户名称
     private String username;
     //用户头像URL
@@ -38,12 +38,14 @@ public class UserEntity  {
     //用户所在城市
     private String city ;
 
-    public Long getGuid() {
-        return guid;
+    private long createTime;
+
+    public Long getId() {
+        return id;
     }
 
-    public void setGuid(Long guid) {
-        this.guid = guid;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getAvatarUrl(){
@@ -167,5 +169,12 @@ public class UserEntity  {
         this.status = status;
     }
 
+    public long getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(long createTime) {
+        this.createTime = createTime;
+    }
 }
 

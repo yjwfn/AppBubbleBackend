@@ -19,14 +19,6 @@ message SmsToken {
 }
 
 
-message FindSmsRecord {
-    string phoneExt = 1;
-    string phone = 2;
-    string token = 3;
-    user.UserGuid userGuid = 4;
-
-}
-
 message SmsRecord{
     string phoneExt = 1;
     string phone = 2;

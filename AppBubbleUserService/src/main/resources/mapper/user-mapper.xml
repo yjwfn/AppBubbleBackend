@@ -4,15 +4,15 @@
     <sql id="columns">
       `guid`,
       `username`,
-      `avatarUrl`,
-      `nickName`,
+      `avatar_url`,
+      `nick_name`,
       `phone`,
-      `phoneExt`,
+      `phone_ext`,
       `email`,
       `gender`,
       `password`,
-      `passwordSalt`,
-      `selfSignature`,
+      `password_salt`,
+      `self_signature`,
       `birthday`,
       `status`,
       `country`,
@@ -21,21 +21,28 @@
     </sql>
 
     <sql id="columnsWithoutPassword">
-        `guid`,
-        `username`,
-        `avatarUrl`,
-        `nickName`,
-        `phone`,
-        `phoneExt`,
-        `email`,
-        `gender`,
-        `selfSignature`,
-        `birthday`,
-        `status`,
-        `country`,
-        `state`,
-        `city`
+      `guid`,
+      `username`,
+      `avatar_url`,
+      `nick_name`,
+      `phone`,
+      `phone_ext`,
+      `email`,
+      `gender`,
+      `self_signature`,
+      `birthday`,
+      `status`,
+      `country`,
+      `state`,
+      `city`
     </sql>
+
+    <insert id="insertUser" parameterType="userEntity">
+
+
+    </insert>
+
+
 
 
     <select id="countByPhoneExtAndPhone" resultType="long">

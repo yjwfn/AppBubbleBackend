@@ -1,8 +1,7 @@
 package com.bubble.user.service;
 
 import com.bubble.user.dto.social.SocialPlatformOAuthDTO;
-import com.bubble.user.dto.user.UserDTO;
-import com.bubble.user.exception.*;
+import com.bubble.user.dto.user.UserDto;
 
 public interface SessionService {
 
@@ -11,7 +10,7 @@ public interface SessionService {
      * @param socialPlatformDTO 第三方帐号用户信息
      * @return
      */
-    UserDTO loginByOAuth(SocialPlatformOAuthDTO socialPlatformDTO);
+    UserDto loginByOAuth(SocialPlatformOAuthDTO socialPlatformDTO);
 
 
     /**
@@ -19,6 +18,6 @@ public interface SessionService {
      * @param phoneLogin 登陆参数
      * @return
      */
-    UserDTO loginByPhone(UserDTO phoneLogin) throws UserNotFoundException;
+    UserDto loginByPhone(UserDto phoneLogin) ;
 
 }

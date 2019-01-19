@@ -76,11 +76,26 @@ services:
   expose:
    - "8080"
    - "8090"
-  ports:
-   - "8088:8080"
-   - "8099:8090"
   depends_on:
 #   - "apollo-portal"
 #   - "mysql-dev"
    - "redis-dev"
+ user:
+  build:
+    context: ./
+    dockerfile: scripts/docker/Dockerfile
+    args:
+      APP_PROJECT_NAME: "AppBubbleUserService"
+  environment:
+   APOLLO_META: "http://apollo-configservice-dev:8080"
+   APP_PROJECT_NAME: "AppBubbleUserService"
+   ENV: dev
+
+  expose:
+   - "8080"
+   - "8090"
+
+  depends_on:
+#    - "apollo-portal"
+    - "mysql-dev"
 

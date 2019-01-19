@@ -2,22 +2,30 @@ package com.bubble.common.exception.biz;
 
 public class BizRuntimeException extends RuntimeException{
 
-    public BizRuntimeException() {
-    }
+    private final int status;
 
-    public BizRuntimeException(String message) {
+    private BizRuntimeException(int status, String message){
         super(message);
+        this.status = status;
     }
 
-    public BizRuntimeException(String message, Throwable cause) {
-        super(message, cause);
+
+    private BizRuntimeException(int status){
+        this(status, null);
     }
 
-    public BizRuntimeException(Throwable cause) {
-        super(cause);
+    public int getStatus() {
+        return status;
     }
 
-    public BizRuntimeException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-        super(message, cause, enableSuppression, writableStackTrace);
+
+
+    public static BizRuntimeException from(int status, String message){
+        return new BizRuntimeException(status, message);
+    }
+
+
+    public static BizRuntimeException from(int status){
+        return new BizRuntimeException(status);
     }
 }

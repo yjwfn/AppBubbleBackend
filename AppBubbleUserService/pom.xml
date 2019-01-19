@@ -6,7 +6,7 @@
 		<groupId>com.bubble</groupId>
 		<artifactId>bubble</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
-		<relativePath>../</relativePath>
+		<relativePath>../pom.xml</relativePath>
 	</parent>
 
 	<artifactId>user</artifactId>
@@ -19,6 +19,11 @@
 	</properties>
 
 	<dependencies>
+		<dependency>
+			<groupId>com.bubble</groupId>
+			<artifactId>common</artifactId>
+		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>
@@ -64,6 +69,11 @@
 		</dependency>
 
 		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+		</dependency>
+
+		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<scope>runtime</scope>
@@ -92,7 +102,7 @@
 				<configuration>
 					<includes>
 						<include>${project.artifactId}/*.proto</include>
-						<include>user/*.proto</include>
+						<include>sms/*.proto</include>
 					</includes>
 				</configuration>
 			</plugin>

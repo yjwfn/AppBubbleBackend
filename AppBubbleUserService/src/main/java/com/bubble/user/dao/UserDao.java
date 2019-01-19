@@ -2,6 +2,7 @@ package com.bubble.user.dao;
 
 
 import com.bubble.user.entity.UserEntity;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.lang.Nullable;
 
@@ -11,7 +12,16 @@ import java.util.Optional;
 /**
 *用户Repository
 */
+@Mapper
 public interface UserDao {
+
+    /**
+     * 获取一个用户
+     * @param userEntity
+     * @return
+     */
+    long insertUser(UserEntity userEntity);
+
     /**
      * 查找手机区号@{code phoneExt}的手机号{@code phone}的数量
      * @param phone 手机号

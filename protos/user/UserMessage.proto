@@ -6,7 +6,47 @@ option java_package = "com.bubble.sms.grpc.user.message";
 option java_outer_classname = "UserMessageProto";
 //option objc_class_prefix = "HLW";
 
-message UserGuid {
-    string guid = 1;
+
+message RegistryWithPhone {
+
+    string phoneExt = 1;
+    string phone = 2;
+    string password = 3;
+    string token = 4;
+    string verificationCode = 5;
+
+
 }
 
+message UserProfile {
+    int64 id = 1;
+	//用户头像URL
+    string avatarUrl = 2;
+    //用户名称
+    string nickName  = 3;
+	//手机号
+    string  phone = 4;
+    //手机区号
+    string phoneExt = 5;
+	//用户email
+	string email = 6;
+
+    //性别(0: 未设置）
+    int32 gender = 9;
+	//用户个性签名
+	string selfSignature = 10;
+    //用户生日
+    int64 birthday = 11;
+	//用户位置：经度
+	int64 longitude = 12;
+    //用户纬度
+    int64 latitude = 13;
+	//用户国家（地区）
+	string country = 14;
+    //用户所在省份、洲
+    string state = 15;
+	//用户所在城市
+	string city = 16;
+    //记录创建时间
+    int64 createTime = 17;
+}

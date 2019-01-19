@@ -4,7 +4,7 @@ package com.bubble.user.dto.user;
 /**
  * Created by yjwfn on 2018/1/26.
  */
-public class PhoneRegistry {
+public class PhoneRegistryDto {
 
 
     private String phoneExt;
@@ -14,7 +14,7 @@ public class PhoneRegistry {
     private String verificationCode;
 
 
-    public PhoneRegistry(String phoneExt, String phone, String password, String token, String verificationCode) {
+    public PhoneRegistryDto(String phoneExt, String phone, String password, String token, String verificationCode) {
         this.phoneExt = phoneExt;
         this.phone = phone;
         this.password = password;
@@ -22,7 +22,7 @@ public class PhoneRegistry {
         this.verificationCode = verificationCode;
     }
 
-    public PhoneRegistry() {
+    public PhoneRegistryDto() {
 
 
 

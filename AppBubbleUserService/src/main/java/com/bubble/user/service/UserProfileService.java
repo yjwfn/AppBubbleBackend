@@ -1,7 +1,7 @@
 package com.bubble.user.service;
 
-import com.bubble.user.dto.user.UserDTO;
-import com.bubble.user.dto.user.UserDetailDTO;
+import com.bubble.user.dto.user.UserDto;
+import com.bubble.user.dto.user.UserDetailDto;
 
 public interface UserProfileService {
 
@@ -11,7 +11,7 @@ public interface UserProfileService {
      * @param url
      * @return
      */
-    UserDTO updateAvatarUrl(Long userId, String url)    ;
+    UserDto updateAvatarUrl(Long userId, String url)    ;
 
     /**
      * 获取用户详情
@@ -20,22 +20,22 @@ public interface UserProfileService {
      * @param otherUserId 他人用户ID
      * @return
      */
-    UserDetailDTO getUserDetail(Long myUserId, Long otherUserId)    ;
+    UserDetailDto getUserDetail(Long myUserId, Long otherUserId)    ;
 
 
 
     /**
      * 更新用户信息
-     * @param userDTO
+     * @param userDto
      * @return
      */
-    UserDTO updateUserProfile(UserDTO userDTO)      ;
+    UserDto updateUserProfile(UserDto userDto)      ;
 
     /**
      * 获取用户信息
      * @param userId
      * @return
      */
-    UserDTO getUserProfile(Long userId) ;
+    UserDto getUserProfile(Long userId) ;
 
 }

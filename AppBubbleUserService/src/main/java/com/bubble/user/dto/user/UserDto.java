@@ -7,7 +7,7 @@ import java.sql.Timestamp;
 /**
  *用户
  */
-public class UserDTO implements Serializable {
+public class UserDto implements Serializable {
 
 	//用户ID
 	private Long id ;
@@ -21,10 +21,6 @@ public class UserDTO implements Serializable {
 	private String phoneExt;
 	//用户email
 	private String email ;
-	//用户密码
-	private String password ;
-	//用户密码混淆值
-	private String passwordSalt;
 	//性别(0: 未设置）
 	private Integer gender ;
 	//用户个性签名
@@ -42,7 +38,7 @@ public class UserDTO implements Serializable {
 	//用户所在城市
 	private String city ;
 	//记录创建时间
-	private Timestamp createTime ;
+	private long createTime ;
  
  	public void setId(Long  id){
 		this.id = id;
@@ -84,14 +80,7 @@ public class UserDTO implements Serializable {
 		return this.email;
 	}
  
- 	public void setPassword(String  password){
-		this.password = password;
-	}
 
-	public String getPassword(){
-		return this.password;
-	}
- 
  	public void setGender(Integer  gender){
 		this.gender = gender;
 	}
@@ -157,21 +146,14 @@ public class UserDTO implements Serializable {
 		return this.city;
 	}
  
- 	public void setCreateTime(Timestamp  createTime){
+ 	public void setCreateTime(long  createTime){
 		this.createTime = createTime;
 	}
 
-	public Timestamp getCreateTime(){
+	public long getCreateTime(){
 		return this.createTime;
 	}
 
-	public String getPasswordSalt() {
-		return passwordSalt;
-	}
-
-	public void setPasswordSalt(String passwordSalt) {
-		this.passwordSalt = passwordSalt;
-	}
 
 	public String getPhoneExt() {
 		return phoneExt;

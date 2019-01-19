@@ -15,4 +15,6 @@ protoc  \
     --java_out=${javaOut} \
     ${rootProjectDir}/protos/sms/SmsMessage.proto \
     ${rootProjectDir}/protos/sms/SmsService.proto \
-    ${rootProjectDir}/protos/user/UserMessage.proto
+    ${rootProjectDir}/protos/user/UserMessage.proto \
+    ${rootProjectDir}/protos/user/UserService.proto
+

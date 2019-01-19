@@ -2,3 +2,10 @@ mybatis:
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: com.bubble.user.entity
 
+
+spring:
+  datasource:
+    url: jdbc:mysql://mysql-dev:3306/bubble_video?characterEncoding=utf8
+    username: root
+    password: 123456
+

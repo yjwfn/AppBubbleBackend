@@ -6,7 +6,7 @@
 		<groupId>com.bubble</groupId>
 		<artifactId>bubble</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
-		<relativePath>../</relativePath>
+		<relativePath>../pom.xml</relativePath>
 	</parent>
  	<artifactId>sms</artifactId>
 	<version>0.0.1-SNAPSHOT</version>

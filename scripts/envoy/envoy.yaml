@@ -14,10 +14,17 @@ static_resources:
          stat_prefix: sms_http
          codec_type: AUTO
          route_config:
-           name: sms
+           name: services
            virtual_hosts:
+           - name: user
+             domains: ["user"]
+             routes:
+             - match:
+                prefix: "/api/v1/users"
+               route:
+                cluster: user_services
            - name: sms
-             domains: ["*"]
+             domains: ["sms"]
              routes:
              - match:
                 prefix: "/sms.SmsService"
@@ -31,7 +38,9 @@ static_resources:
          - name: envoy.grpc_json_transcoder
            config:
              proto_descriptor: "/app/app.protobin"
-             services: ["sms.SmsService"]
+             services:
+              - "sms.SmsService"
+              - "user.UserService"
              match_incoming_request_route: true
              print_options:
               add_whitespace: true
@@ -49,4 +58,12 @@ static_resources:
    lb_policy: ROUND_ROBIN
    http2_protocol_options: {}
    hosts: [{ socket_address: { address: sms, port_value: 8090 }}]
+
+ - name: user_services
+   connect_timeout: 0.25s
+   type: LOGICAL_DNS
+   dns_lookup_family: V4_ONLY
+   lb_policy: ROUND_ROBIN
+   http2_protocol_options: {}
+   hosts: [{ socket_address: { address: user, port_value: 8090 }}]
 

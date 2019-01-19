@@ -1,0 +1,23 @@
+syntax = "proto3";
+import "google/api/annotations.proto";
+import "user/UserMessage.proto";
+
+package user;
+
+//option java_multiple_files = true;
+option java_package = "com.bubble.sms.grpc.user.service";
+option java_outer_classname = "UserServiceProto";
+//option objc_class_prefix = "HLW";
+
+service UserService {
+
+
+    rpc registryUserWithPhone(RegistryWithPhone) returns (UserProfile) {
+        option (google.api.http) = {
+            post: "/api/v1/users"
+            body: "*"
+        };
+    }
+}
+
+

@@ -3,7 +3,7 @@ package com.bubble.user.dto.user;
 /**
  * Created by yjwfn on 2018/3/8.
  */
-public class UserDetailDTO extends UserDTO {
+public class UserDetailDto extends UserDto {
 
     private Boolean isFollowing;
     private Integer fansCount;

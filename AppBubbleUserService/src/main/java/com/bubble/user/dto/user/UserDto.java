@@ -3,6 +3,7 @@ package com.bubble.user.dto.user;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
  *用户
@@ -39,6 +40,8 @@ public class UserDto implements Serializable {
 	private String city ;
 	//记录创建时间
 	private Long createTime ;
+
+	private String[] address;
  
  	public void setId(Long  id){
 		this.id = id;
@@ -161,6 +164,37 @@ public class UserDto implements Serializable {
 
 	public void setPhoneExt(String phoneExt) {
 		this.phoneExt = phoneExt;
+	}
+
+
+	public String[] getAddress() {
+		return address;
+	}
+
+	public void setAddress(String[] address) {
+		this.address = address;
+	}
+
+	@Override
+	public String toString() {
+		return "UserDto{" +
+				"id=" + id +
+				", avatarUrl='" + avatarUrl + '\'' +
+				", nickName='" + nickName + '\'' +
+				", phone='" + phone + '\'' +
+				", phoneExt='" + phoneExt + '\'' +
+				", email='" + email + '\'' +
+				", gender=" + gender +
+				", selfSignature='" + selfSignature + '\'' +
+				", birthday=" + birthday +
+				", longitude=" + longitude +
+				", latitude=" + latitude +
+				", country='" + country + '\'' +
+				", state='" + state + '\'' +
+				", city='" + city + '\'' +
+				", createTime=" + createTime +
+				", address=" + address +
+				'}';
 	}
 }
 

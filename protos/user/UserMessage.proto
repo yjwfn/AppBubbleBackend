@@ -53,4 +53,6 @@ message UserProfile {
 	string city = 16;
     //记录创建时间
     int64 createTime = 17;
+
+    repeated string address = 18;
 }

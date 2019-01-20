@@ -24,6 +24,7 @@
         <java.version>1.8</java.version>
         <jarName>${project.artifactId}-${project.version}</jarName>
         <grpc.version>1.17.1</grpc.version>
+        <protos.version>3.6.1</protos.version>
         <protos.basedir>${project.basedir}/../protos</protos.basedir>
         <GOPATH>${HOME}/go</GOPATH>
     </properties>
@@ -80,6 +81,26 @@
                 <groupId>io.grpc</groupId>
                 <artifactId>grpc-stub</artifactId>
                 <version>${grpc.version}</version>
+            </dependency>
+
+            <!-- Protocol Bufferes -->
+            <dependency>
+                <groupId>com.google.protobuf</groupId>
+                <artifactId>protobuf-java</artifactId>
+                <version>${protos.version}</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>com.google.protobuf</groupId>
+                <artifactId>protobuf-java-util</artifactId>
+                <version>${protos.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>commons-beanutils</groupId>
+                <artifactId>commons-beanutils</artifactId>
+                <version>1.9.3</version>
             </dependency>
 
             <dependency>

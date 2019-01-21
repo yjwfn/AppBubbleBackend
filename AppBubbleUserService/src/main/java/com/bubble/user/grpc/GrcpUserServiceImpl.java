@@ -90,4 +90,6 @@ public class GrcpUserServiceImpl extends UserServiceGrpc.UserServiceImplBase {
         responseObserver.onNext(userProfileBuilder.build());
         responseObserver.onCompleted();
     }
+
+
 }

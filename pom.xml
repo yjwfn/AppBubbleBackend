@@ -21,12 +21,16 @@
     </modules>
 
     <properties>
-        <java.version>1.8</java.version>
+        <GOPATH>${HOME}/go</GOPATH>
+
         <jarName>${project.artifactId}-${project.version}</jarName>
-        <grpc.version>1.17.1</grpc.version>
+        <java.version>1.8</java.version>
+
+        <jackson.version>2.9.7</jackson.version>
         <protos.version>3.6.1</protos.version>
         <protos.basedir>${project.basedir}/../protos</protos.basedir>
-        <GOPATH>${HOME}/go</GOPATH>
+
+        <grpc.version>1.17.1</grpc.version>
     </properties>
 
     <profiles>
@@ -127,6 +131,25 @@
                 <groupId>com.bubble</groupId>
                 <artifactId>common</artifactId>
                 <version>1.0-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+
+            <dependency>
+                <!-- Note: core-annotations version x.y.0 is generally compatible with
+                     (identical to) version x.y.1, x.y.2, etc. -->
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-annotations</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-core</artifactId>
+                <version>${jackson.version}</version>
             </dependency>
 
         </dependencies>

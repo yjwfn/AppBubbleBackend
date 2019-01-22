@@ -3,7 +3,9 @@ package com.bubble.user.dto.user;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 /**
  *用户
@@ -29,9 +31,9 @@ public class UserDto implements Serializable {
 	//用户生日
 	private Long birthday ;
 	//用户位置：经度
-	private BigDecimal longitude ;
+	private Long longitude ;
 	//用户纬度
-	private BigDecimal latitude ;
+	private Long latitude ;
 	//用户国家（地区）
 	private String country ;
 	//用户所在省份、洲
@@ -42,7 +44,11 @@ public class UserDto implements Serializable {
 	private Long createTime ;
 
 	private String[] address;
- 
+
+	private Map<String, String> keys;
+
+	private String status;
+
  	public void setId(Long  id){
 		this.id = id;
 	}
@@ -109,23 +115,24 @@ public class UserDto implements Serializable {
 		this.birthday = birthday;
 	}
 
-	public void setLongitude(BigDecimal  longitude){
+
+	public Long getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(Long longitude) {
 		this.longitude = longitude;
 	}
 
-	public BigDecimal getLongitude(){
-		return this.longitude;
+	public Long getLatitude() {
+		return latitude;
 	}
- 
- 	public void setLatitude(BigDecimal  latitude){
+
+	public void setLatitude(Long latitude) {
 		this.latitude = latitude;
 	}
 
-	public BigDecimal getLatitude(){
-		return this.latitude;
-	}
- 
- 	public void setCountry(String  country){
+	public void setCountry(String  country){
 		this.country = country;
 	}
 
@@ -175,6 +182,24 @@ public class UserDto implements Serializable {
 		this.address = address;
 	}
 
+
+	public Map<String, String> getKeys() {
+		return keys;
+	}
+
+	public void setKeys(Map<String, String > keys) {
+		this.keys = keys;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+
 	@Override
 	public String toString() {
 		return "UserDto{" +
@@ -193,7 +218,9 @@ public class UserDto implements Serializable {
 				", state='" + state + '\'' +
 				", city='" + city + '\'' +
 				", createTime=" + createTime +
-				", address=" + address +
+				", address=" + Arrays.toString(address) +
+				", keys=" + keys +
+				", status='" + status + '\'' +
 				'}';
 	}
 }

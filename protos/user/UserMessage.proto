@@ -55,4 +55,14 @@ message UserProfile {
     int64 createTime = 17;
 
     repeated string address = 18;
+    map<string, string> keys = 19;
+
+    user.UserStatus status = 20;
+}
+
+enum UserStatus {
+    SUCCESS = 0;
+
+    FAILURE = 1000;
+
 }

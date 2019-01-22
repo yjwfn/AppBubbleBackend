@@ -76,8 +76,29 @@
       </trim>
 
     </insert>
+    <update id="updateUser" parameterType="userEntity">
+       UPDATE user
+        <set>
+            <if test="username != null">`username`=#{username},</if>
+            <if test="avatarUrl != null">`avatar_url`=#{avatarUrl},</if>
+            <if test="nickName != null">`nick_name`=#{nickName},</if>
+            <if test="phone != null">`phone`=#{phone},</if>
+            <if test="phoneExt != null">`phone_ext`=#{phoneExt},</if>
+            <if test="email != null">`email`=#{nemailickName},</if>
+            <if test="gender != null">`gender`=#{gender},</if>
+            <if test="password != null">`password`=#{password},</if>
+            <if test="passwordSalt != null">`password_salt`=#{passwordSalt},</if>
+            <if test="selfSignature != null">`self_signature`=#{selfSignature},</if>
+            <if test="birthday != null">`birthday`=#{birthday},</if>
+            <if test="status != null">`status`=#{status},</if>
+            <if test="country != null">`country`=#{country},</if>
+            <if test="state != null">`state`=#{state},</if>
+            <if test="city != null">`city`=#{city}</if>
+        </set>
 
+        WHERE `id` = #{id}
 
+    </update>
 
 
     <select id="countByPhoneExtAndPhone" resultType="long">

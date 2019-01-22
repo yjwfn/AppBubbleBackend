@@ -11,5 +11,7 @@ public interface  UserServiceStatus extends ServiceStatus {
     int INVALID_VERIFICATION_CODE = 1000;
 
 
+    int IDENTICAL_PASSWORD = 10001;
+
 
 }

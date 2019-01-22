@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService{
 
         if(phoneRegistryDto == null){
             throw BizRuntimeException
-                    .from(UserServiceStatus.BAT_PARAMS, "Cannot not to create user with null.");
+                    .from(UserServiceStatus.BAD_REQUEST, "Cannot not to create user with null.");
         }
 
 
@@ -60,7 +60,7 @@ public class UserServiceImpl implements UserService{
         String code = phoneRegistryDto.getVerificationCode();
 
         if(Strings.isNullOrEmpty(phone) || Strings.isNullOrEmpty(password) || Strings.isNullOrEmpty(token) || Strings.isNullOrEmpty(code)){
-            throw BizRuntimeException.from(UserServiceStatus.BAT_PARAMS, "Cannot not to create user, please check your params.");
+            throw BizRuntimeException.from(UserServiceStatus.BAD_REQUEST, "Cannot not to create user, please check your params.");
         }
 
         SmsMessageProto.SmsToken smsToken = SmsMessageProto.SmsToken.newBuilder()
@@ -72,7 +72,7 @@ public class UserServiceImpl implements UserService{
         SmsMessageProto.SmsRecord smsRecord = smsServiceBlockingStub.findRecordByToken(smsToken);smsRecord.isInitialized();
 //        if(smsRecord == null){
 //            throw BizRuntimeException
-//                    .from(UserServiceStatus.BAT_PARAMS, "Invalid ");
+//                    .from(UserServiceStatus.BAD_REQUEST, "Invalid ");
 //
 //        }
         /*
@@ -119,11 +119,11 @@ public class UserServiceImpl implements UserService{
     public UserDto bindPhone(Long userId, PhoneRegistryDto phoneRegistry) {
 
         if(phoneRegistry == null){
-            throw BizRuntimeException.from(ServiceStatus.BAT_PARAMS, "PhoneRegistryDto cannot be null.");
+            throw BizRuntimeException.from(ServiceStatus.BAD_REQUEST, "PhoneRegistryDto cannot be null.");
         }
 
         if (userId == null) {
-            throw BizRuntimeException.from(ServiceStatus.BAT_PARAMS, "userId cannot be null.");
+            throw BizRuntimeException.from(ServiceStatus.BAD_REQUEST, "userId cannot be null.");
         }
 
 
@@ -134,20 +134,20 @@ public class UserServiceImpl implements UserService{
         String code = phoneRegistry.getVerificationCode();
 
         if(Strings.isNullOrEmpty(phone)){
-            throw BizRuntimeException.from(ServiceStatus.BAT_PARAMS, "The Phone field must not be null.");
+            throw BizRuntimeException.from(ServiceStatus.BAD_REQUEST, "The Phone field must not be null.");
         }
 
         if(Strings.isNullOrEmpty(password)){
-            throw BizRuntimeException.from(ServiceStatus.BAT_PARAMS, "The Password field must not be null.");
+            throw BizRuntimeException.from(ServiceStatus.BAD_REQUEST, "The Password field must not be null.");
         }
 
 
         if(Strings.isNullOrEmpty(token)){
-            throw BizRuntimeException.from(ServiceStatus.BAT_PARAMS, "The Token field must not be null.");
+            throw BizRuntimeException.from(ServiceStatus.BAD_REQUEST, "The Token field must not be null.");
         }
 
         if(Strings.isNullOrEmpty(code)){
-            throw BizRuntimeException.from(ServiceStatus.BAT_PARAMS, "The verification field code must not be null.");
+            throw BizRuntimeException.from(ServiceStatus.BAD_REQUEST, "The verification field code must not be null.");
         }
 
         SmsMessageProto.SmsToken smsToken = SmsMessageProto.SmsToken
@@ -157,12 +157,12 @@ public class UserServiceImpl implements UserService{
 
         SmsMessageProto.SmsRecord smsRecord = smsServiceBlockingStub.findRecordByToken(smsToken);
         if(smsRecord == null){
-            throw BizRuntimeException.from(ServiceStatus.BAT_PARAMS, "Not found verification code for phone");
+            throw BizRuntimeException.from(ServiceStatus.BAD_REQUEST, "Not found verification code for phone");
         }
 
 
         if (!Objects.equal(smsRecord.getCode(), code)) {
-            throw BizRuntimeException.from(ServiceStatus.BAT_PARAMS, "The verification is't correct.");
+            throw BizRuntimeException.from(ServiceStatus.BAD_REQUEST, "The verification is't correct.");
         }
 
         boolean isExists = userDao.countByPhoneExtAndPhone(phoneExt, phone) > 0;
@@ -195,13 +195,79 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public UserDto updatePassword(UpdatePassword updatePassword) {
+        if(updatePassword == null){
+            throw BizRuntimeException.from(UserServiceStatus.BAD_REQUEST, "Bad params.");
+        }
 
+
+        Long userId = updatePassword.getUserId();
+        String newPassword = updatePassword.getNewPassword();
+        String confirmPassword = updatePassword.getConfirmPassword();
+        String oldPassword = updatePassword.getOldPassword();
+
+        if(userId == null){
+            throw BizRuntimeException.from(UserServiceStatus.BAD_REQUEST, "User id within request must not be null.");
+
+        }
+
+        if(Strings.isNullOrEmpty(oldPassword)){
+            throw BizRuntimeException.from(UserServiceStatus.BAD_REQUEST, "Old password must not be null.");
+
+        }
+
+        if(Strings.isNullOrEmpty(newPassword)){
+            throw BizRuntimeException.from(UserServiceStatus.BAD_REQUEST, "Did you provide a new password for your account?");
+        }
+
+        if(Strings.isNullOrEmpty(confirmPassword)){
+            throw BizRuntimeException.from(UserServiceStatus.BAD_REQUEST, "No confirmation password.");
+
+        }
+
+        if(!confirmPassword.equals(newPassword)){
+            throw BizRuntimeException.from(UserServiceStatus.BAD_REQUEST, "The new password is not match with the confirmation password.");
+        }
+
+        UserEntity userEntity = userDao.findById(userId).orElseGet(null);
+        if(userEntity == null){
+            throw BizRuntimeException.from(UserServiceStatus.BAD_REQUEST, "Not found user with id" + userId);
+        }
+
+
+        String salt = userEntity.getPasswordSalt();
+        String encryptedPassword = userEntity.getPassword();
+
+
+        if (Strings.isNullOrEmpty(encryptedPassword) || Strings.isNullOrEmpty(salt)) {
+            throw BizRuntimeException.from(UserServiceStatus.BAD_REQUEST, "Did  you set your password? Please bind your phone first.");
+        }
+
+
+        String decryptedPassword = PasswordUtils.decrypt(oldPassword, encryptedPassword, salt);
+        if (!Objects.equal(oldPassword, decryptedPassword)) {
+            throw BizRuntimeException.from(UserServiceStatus.BAD_REQUEST, "Incorrect old password.");
+        }
+
+        if(newPassword.equals(userEntity.getPassword())){
+            throw BizRuntimeException.from(UserServiceStatus.IDENTICAL_PASSWORD, "No change.");
+        }
+
+        salt = PasswordUtils.salt();
+        encryptedPassword = PasswordUtils.encrypt(newPassword, salt);
+        UserEntity updateEntity = new UserEntity();
+        updateEntity.setId(userEntity.getId());
+        updateEntity.setPasswordSalt(salt);
+        updateEntity.setPassword(encryptedPassword);
+        userDao.updateUser(userEntity);
+        UserDto userDTO = new UserDto();
+        BeanUtils.copyProperties(userEntity, userDTO);
+        return userDTO;
     }
 
     @Override
     public UserDto resetPassword(ResetPassword resetPassword) {
         if(resetPassword == null){
-            throw BizRuntimeException.from(ServiceStatus.BAT_PARAMS, "Bad params");
+            throw BizRuntimeException.from(ServiceStatus.BAD_REQUEST, "Bad params");
         }
 
         String phoneExt = resetPassword.getPhoneExt();
@@ -212,29 +278,29 @@ public class UserServiceImpl implements UserService{
         String confirmationPassword = resetPassword.getConfirmPassword();
 
         if (Strings.isNullOrEmpty(phone) || !PhoneUtils.isPhoneNumber(phone, false)) {
-            throw BizRuntimeException.from(ServiceStatus.BAT_PARAMS, "Bad phone.");
+            throw BizRuntimeException.from(ServiceStatus.BAD_REQUEST, "Bad phone.");
 
         }
 
         if(Strings.isNullOrEmpty(token)){
-            throw BizRuntimeException.from(ServiceStatus.BAT_PARAMS, "The token field must not be null.");
+            throw BizRuntimeException.from(ServiceStatus.BAD_REQUEST, "The token field must not be null.");
         }
 
         if(Strings.isNullOrEmpty(verificationCode)){
-            throw BizRuntimeException.from(ServiceStatus.BAT_PARAMS, "The verification field code must not null.");
+            throw BizRuntimeException.from(ServiceStatus.BAD_REQUEST, "The verification field code must not null.");
         }
 
         if(Strings.isNullOrEmpty(newPassword)){
-            throw BizRuntimeException.from(ServiceStatus.BAT_PARAMS, "The password field code must not null.");
+            throw BizRuntimeException.from(ServiceStatus.BAD_REQUEST, "The password field code must not null.");
         }
 
         if(Strings.isNullOrEmpty(confirmationPassword)){
-            throw BizRuntimeException.from(ServiceStatus.BAT_PARAMS, "The confirmation password field  must not null.");
+            throw BizRuntimeException.from(ServiceStatus.BAD_REQUEST, "The confirmation password field  must not null.");
 
         }
 
         if(!Objects.equal(newPassword, confirmationPassword)){
-            throw BizRuntimeException.from(ServiceStatus.BAT_PARAMS, "The new password does not match the confirmation password.");
+            throw BizRuntimeException.from(ServiceStatus.BAD_REQUEST, "The new password does not match the confirmation password.");
 
         }
 
@@ -245,16 +311,16 @@ public class UserServiceImpl implements UserService{
 
         SmsMessageProto.SmsRecord smsRecord = smsServiceBlockingStub.findRecordByToken(smsToken);
         if(smsRecord == null){
-            throw BizRuntimeException.from(ServiceStatus.BAT_PARAMS, "The verification code does not exists..");
+            throw BizRuntimeException.from(ServiceStatus.BAD_REQUEST, "The verification code does not exists..");
         }
 
         if (!Objects.equal(verificationCode, smsRecord.getCode())) {
-            throw BizRuntimeException.from(ServiceStatus.BAT_PARAMS, "The verification code does not exists.");
+            throw BizRuntimeException.from(ServiceStatus.BAD_REQUEST, "The verification code does not exists.");
         }
 
         Optional<UserEntity> userEntityOptional = userDao.findByPhoneExtAndPhone(phoneExt, phone);
         if(!userEntityOptional.isPresent()){
-            throw BizRuntimeException.from(ServiceStatus.BAT_PARAMS, "Cannot find user with phone #" + phone);
+            throw BizRuntimeException.from(ServiceStatus.BAD_REQUEST, "Cannot find user with phone #" + phone);
         }
 
         UserEntity userEntity = userEntityOptional.orElse(null);

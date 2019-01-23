@@ -175,7 +175,7 @@ public class UserServiceImpl implements UserService{
             throw BizRuntimeException.from(ServiceStatus.NOT_FOUND, "Not found user with id #" + userId);
         }
 
-        UserEntity userEntity = userDao.findById(userId).orElseGet(null);
+        UserEntity userEntity = userDao.findById(userId);
         userEntity.setPhone(phone);
         userEntity.setPhoneExt(phoneExt);
 
@@ -228,7 +228,7 @@ public class UserServiceImpl implements UserService{
             throw BizRuntimeException.from(UserServiceStatus.BAD_REQUEST, "The new password is not match with the confirmation password.");
         }
 
-        UserEntity userEntity = userDao.findById(userId).orElseGet(null);
+        UserEntity userEntity = userDao.findById(userId);
         if(userEntity == null){
             throw BizRuntimeException.from(UserServiceStatus.BAD_REQUEST, "Not found user with id" + userId);
         }

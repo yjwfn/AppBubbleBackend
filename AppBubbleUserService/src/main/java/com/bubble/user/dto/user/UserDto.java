@@ -13,7 +13,7 @@ import java.util.Map;
 public class UserDto implements Serializable {
 
 	//用户ID
-	private Long id ;
+	private long id ;
 	//用户头像URL
 	private String avatarUrl ;
 	//用户名称
@@ -43,10 +43,7 @@ public class UserDto implements Serializable {
 	//记录创建时间
 	private Long createTime ;
 
-	private String[] address;
-
-	private Map<String, String> keys;
-
+	//用户状态
 	private String status;
 
  	public void setId(Long  id){
@@ -173,24 +170,6 @@ public class UserDto implements Serializable {
 		this.phoneExt = phoneExt;
 	}
 
-
-	public String[] getAddress() {
-		return address;
-	}
-
-	public void setAddress(String[] address) {
-		this.address = address;
-	}
-
-
-	public Map<String, String> getKeys() {
-		return keys;
-	}
-
-	public void setKeys(Map<String, String > keys) {
-		this.keys = keys;
-	}
-
 	public String getStatus() {
 		return status;
 	}
@@ -199,29 +178,5 @@ public class UserDto implements Serializable {
 		this.status = status;
 	}
 
-
-	@Override
-	public String toString() {
-		return "UserDto{" +
-				"id=" + id +
-				", avatarUrl='" + avatarUrl + '\'' +
-				", nickName='" + nickName + '\'' +
-				", phone='" + phone + '\'' +
-				", phoneExt='" + phoneExt + '\'' +
-				", email='" + email + '\'' +
-				", gender=" + gender +
-				", selfSignature='" + selfSignature + '\'' +
-				", birthday=" + birthday +
-				", longitude=" + longitude +
-				", latitude=" + latitude +
-				", country='" + country + '\'' +
-				", state='" + state + '\'' +
-				", city='" + city + '\'' +
-				", createTime=" + createTime +
-				", address=" + Arrays.toString(address) +
-				", keys=" + keys +
-				", status='" + status + '\'' +
-				'}';
-	}
 }
 

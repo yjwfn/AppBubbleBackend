@@ -25,9 +25,9 @@ public class ProtobufUtils {
 
 
 
-    public static synchronized void merge(Object object, Message.Builder builder){
+    public static synchronized void merge(Object source, Message.Builder builder){
         try {
-            String jsonObject = objectMapper.writeValueAsString(object);
+            String jsonObject = objectMapper.writeValueAsString(source);
             JsonFormat.parser().merge(jsonObject, builder);
         } catch (Throwable e) {
             throw new IllegalStateException(e);

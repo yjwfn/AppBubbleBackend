@@ -22,6 +22,10 @@ message RegistryWithPhone {
 
 }
 
+message UserId {
+    int64 usreId = 1;
+}
+
 message UserProfile {
     int64 id = 1;
 	//用户头像URL
@@ -53,11 +57,8 @@ message UserProfile {
 	string city = 16;
     //记录创建时间
     int64 createTime = 17;
-
-    repeated string address = 18;
-    map<string, string> keys = 19;
-
-    user.UserStatus status = 20;
+    //用户状态
+    string status = 20;
 }
 
 enum UserStatus {

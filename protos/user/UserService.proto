@@ -18,6 +18,12 @@ service UserService {
             body: "*"
         };
     }
+
+    rpc getUserProfile(user.UserId) returns (user.UserProfile){
+        option (google.api.http) = {
+            get: "/api/v1/users/{usreId}"
+        };
+    }
 }
 
 

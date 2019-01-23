@@ -57,7 +57,7 @@ public interface UserDao {
      * @param id
      * @return
      */
-    Optional<UserEntity> findById(Long id);
+    UserEntity findById(@Param("id") Long id);
 
 
     /**

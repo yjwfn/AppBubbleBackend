@@ -23,7 +23,6 @@ public class ProtobufUtils {
         try {
             String jsonObject = JsonFormat
                     .printer()
-                    .includingDefaultValueFields(Collections.emptySet())
                     .print(source);
 
             return objectMapper.readValue(jsonObject, clz);

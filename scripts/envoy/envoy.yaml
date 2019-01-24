@@ -11,20 +11,22 @@ static_resources:
    - filters:
      - name: envoy.http_connection_manager
        config:
-         stat_prefix: sms_http
+         stat_prefix: bubble_http
          codec_type: AUTO
          route_config:
            name: services
            virtual_hosts:
            - name: user
-             domains: ["user"]
+             domains:
+             - "user"
+             - "session"
              routes:
              - match:
-                prefix: user.UserService
+                prefix: "/api/v1/users"
                route:
                 cluster: user_services
              - match:
-                prefix: "/api/v1/users"
+                prefix: "/api/v1/session"
                route:
                 cluster: user_services
            - name: sms
@@ -45,6 +47,7 @@ static_resources:
              services:
               - "sms.SmsService"
               - "user.UserService"
+              - "session.SessionService"
              match_incoming_request_route: true
              print_options:
               add_whitespace: true

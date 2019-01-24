@@ -1,0 +1,40 @@
+syntax = "proto3";
+import "google/api/annotations.proto";
+
+package session;
+
+//option java_multiple_files = true;
+option java_package = "com.bubble.sms.grpc.session.service";
+option java_outer_classname = "SessionServiceProto";
+//option objc_class_prefix = "HLW";
+
+service SessionService {
+
+    rpc loginByPhone(session.LoginByPhone) returns (session.LoginResult){
+        option (google.api.http) = {
+            post: "/api/v1/session"
+            body: "*"
+        };
+    }
+
+
+}
+
+
+message LoginByPhone {
+    string phoneExt = 1;
+    string phone = 2;
+    string password = 3;
+
+}
+
+
+message LoginResult {
+    string id = 1;
+    string nickName = 2;
+    string phone = 3;
+    string token = 4;
+    string phoneExt = 5;
+}
+
+

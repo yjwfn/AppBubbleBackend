@@ -1,6 +1,8 @@
 package com.bubble.user.service;
 
 import com.bubble.user.dto.social.SocialPlatformOAuthDTO;
+import com.bubble.user.dto.user.LoginResultDto;
+import com.bubble.user.dto.user.PhoneLoginDto;
 import com.bubble.user.dto.user.UserDto;
 
 public interface SessionService {
@@ -18,6 +20,6 @@ public interface SessionService {
      * @param phoneLogin 登陆参数
      * @return
      */
-    UserDto loginByPhone(UserDto phoneLogin) ;
+    LoginResultDto loginByPhone(PhoneLoginDto phoneLogin) ;
 
 }

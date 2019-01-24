@@ -9,11 +9,14 @@ public interface ServiceStatus {
     int NOT_FOUND = -1;
 
     /** 错误不正确  */
-    int BAT_PARAMS = -2;
-
+    int BAD_REQUEST = -2;
 
     /** 资源已经存在 */
-    int ALREADY_EXISTS = 1;
+    int ALREADY_EXISTS = -3;
+
+    default boolean isSuccess(int code){
+        return code == SUCCESS;
+    }
 
 
 }

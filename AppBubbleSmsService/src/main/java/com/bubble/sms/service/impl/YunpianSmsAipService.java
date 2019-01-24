@@ -1,5 +1,7 @@
 package com.bubble.sms.service.impl;
 
+import com.bubble.common.exception.biz.BizRuntimeException;
+import com.bubble.common.exception.biz.ServiceStatus;
 import com.bubble.sms.dao.SmsDao;
 import com.bubble.sms.dto.SmsRecord;
 import com.bubble.sms.entity.SmsRecordEntity;
@@ -133,7 +135,7 @@ public class YunpianSmsAipService implements SmsService,DisposableBean {
             }
         }
 
-        return null;
+        throw BizRuntimeException.from(ServiceStatus.NOT_FOUND, "Not found sms record.");
     }
 
     @Override

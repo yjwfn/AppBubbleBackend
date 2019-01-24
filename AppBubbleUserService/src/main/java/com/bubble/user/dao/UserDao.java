@@ -36,6 +36,14 @@ public interface UserDao {
      */
     long countById(Long userId);
 
+
+    /**
+     * 更新用户信息
+     * @param userEntity
+     * @return
+     */
+    long updateUser(UserEntity userEntity);
+
     /**
      * 通过呢称搜索用户
      * @param nickName
@@ -49,7 +57,7 @@ public interface UserDao {
      * @param id
      * @return
      */
-    Optional<UserEntity> findById(Long id);
+    UserEntity findById(@Param("id") Long id);
 
 
     /**

@@ -36,6 +36,24 @@
       `state`,
       `city`
     </sql>
+
+    <resultMap id="userEntityMap" type="userEntity">
+        <id property="id" column="id" />
+        <result property="nickName" column="nick_name"/>
+        <result property="username" column="username"/>
+        <result property="avatarUrl" column="avatar_url"/>
+        <result property="nickName" column="nick_name"/>
+        <result property="phone" column="phone"/>
+        <result property="phoneExt" column="phone_ext"/>
+        <result property="email" column="email"/>
+        <result property="gender" column="gender"/>
+        <result property="selfSignature" column="self_signature"/>
+        <result property="birthday" column="birthday"/>
+        <result property="status" column="status"/>
+        <result property="country" column="country"/>
+        <result property="state" column="state"/>
+        <result property="city" column="city"/>
+    </resultMap>
     <insert id="insertUser" parameterType="userEntity" >
       INSERT INTO
       <trim prefix="`user`(" suffix=")" suffixOverrides=",">
@@ -76,8 +94,29 @@
       </trim>
 
     </insert>
+    <update id="updateUser" parameterType="userEntity">
+       UPDATE user
+        <set>
+            <if test="username != null">`username`=#{username},</if>
+            <if test="avatarUrl != null">`avatar_url`=#{avatarUrl},</if>
+            <if test="nickName != null">`nick_name`=#{nickName},</if>
+            <if test="phone != null">`phone`=#{phone},</if>
+            <if test="phoneExt != null">`phone_ext`=#{phoneExt},</if>
+            <if test="email != null">`email`=#{nemailickName},</if>
+            <if test="gender != null">`gender`=#{gender},</if>
+            <if test="password != null">`password`=#{password},</if>
+            <if test="passwordSalt != null">`password_salt`=#{passwordSalt},</if>
+            <if test="selfSignature != null">`self_signature`=#{selfSignature},</if>
+            <if test="birthday != null">`birthday`=#{birthday},</if>
+            <if test="status != null">`status`=#{status},</if>
+            <if test="country != null">`country`=#{country},</if>
+            <if test="state != null">`state`=#{state},</if>
+            <if test="city != null">`city`=#{city}</if>
+        </set>
 
+        WHERE `id` = #{id}
 
+    </update>
 
 
     <select id="countByPhoneExtAndPhone" resultType="long">
@@ -87,10 +126,10 @@
       SELECT COUNT(ID) FROM user WHERE id=#{userId}
     </select>
     <select id="findByNickNameLike" resultType="userEntity">
-      SELECT <include refid="columnsWithoutPassword"/> FROM user WHERE nick_name=${nickName}
+      SELECT <include refid="columnsWithoutPassword"/> FROM user WHERE nick_name=#{nickName}
     </select>
-    <select id="findById" resultType="userEntity">
-        SELECT <include refid="columnsWithoutPassword"/> FROM user WHERE id=${id}
+    <select id="findById" resultType="userEntity" resultMap="userEntityMap">
+        SELECT <include refid="columnsWithoutPassword"/> FROM user WHERE `id`=#{id}
     </select>
     <select id="findByPhoneExtAndPhone" resultType="userEntity">
         SELECT <include refid="columnsWithoutPassword"/>  FROM user WHERE phone=#{phone} AND phone_ext=#{phoneExt}

@@ -22,6 +22,10 @@ message RegistryWithPhone {
 
 }
 
+message UserId {
+    int64 usreId = 1;
+}
+
 message UserProfile {
     int64 id = 1;
 	//用户头像URL
@@ -53,4 +57,13 @@ message UserProfile {
 	string city = 16;
     //记录创建时间
     int64 createTime = 17;
+    //用户状态
+    string status = 20;
+}
+
+enum UserStatus {
+    SUCCESS = 0;
+
+    FAILURE = 1000;
+
 }

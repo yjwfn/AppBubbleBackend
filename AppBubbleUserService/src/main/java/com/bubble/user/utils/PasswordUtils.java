@@ -95,10 +95,11 @@ public final class PasswordUtils {
     public static void main(String[] args){
         //eddc17b26f2834ed457ca6fb115eab0e
 
-        String salt = "123";
-        String encryptedPassword = encrypt("123", salt);
+        String salt = "f6d0a44be96c1453";
+        String password = "18817096723";
+        String encryptedPassword = encrypt(password, salt);
         System.out.println(encryptedPassword);
-        System.out.println(decrypt("123", encryptedPassword, salt));
+        System.out.println(decrypt(password, encryptedPassword, salt));
     }
 
 }

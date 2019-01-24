@@ -318,12 +318,12 @@ public class UserServiceImpl implements UserService{
             throw BizRuntimeException.from(ServiceStatus.BAD_REQUEST, "The verification code does not exists.");
         }
 
-        Optional<UserEntity> userEntityOptional = userDao.findByPhoneExtAndPhone(phoneExt, phone);
-        if(!userEntityOptional.isPresent()){
+        UserEntity userEntity = userDao.findByPhoneExtAndPhone(phoneExt, phone);
+        if(userEntity == null){
             throw BizRuntimeException.from(ServiceStatus.BAD_REQUEST, "Cannot find user with phone #" + phone);
         }
 
-        UserEntity userEntity = userEntityOptional.orElse(null);
+
         String salt = PasswordUtils.salt();
         String encryptedPassword = PasswordUtils.encrypt(newPassword, salt);
         userEntity.setPasswordSalt(salt);

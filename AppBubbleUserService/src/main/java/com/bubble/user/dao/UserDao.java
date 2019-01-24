@@ -65,9 +65,16 @@ public interface UserDao {
      * @param phone
      * @return
      */
-    Optional<UserEntity> findByPhoneExtAndPhone(@Nullable String ext, String phone);
+    UserEntity findByPhoneExtAndPhone(@Nullable String ext, String phone);
 
 
+    /**
+     * 查找用户
+     * @param phoneExt 手机区号
+     * @param phone 手机号
+     * @return
+     */
+    UserEntity findUserByPhoneWhenLogin(String phoneExt , String phone);
 
     /**
      * 查看匹配{@code phone}的手机用户

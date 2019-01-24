@@ -1,5 +1,6 @@
 package com.bubble.sms.grpc.service;
 
+import com.bubble.common.utils.ProtobufUtils;
 import com.bubble.sms.dto.SmsRecord;
 import com.bubble.sms.grpc.message.SmsMessageProto;
 import com.bubble.sms.service.SmsService;
@@ -26,15 +27,9 @@ public class GrpcSmsServiceImpl extends SmsServiceGrpc.SmsServiceImplBase {
     @Override
     public void findRecordByToken(SmsMessageProto.SmsToken request, StreamObserver<SmsMessageProto.SmsRecord> responseObserver) {
         SmsRecord smsRecord = smsService.findRecordByToken(request.getToken());
-        SmsMessageProto.SmsRecord response = SmsMessageProto.SmsRecord.newBuilder()
-                .setCode(smsRecord.getCode())
-                .setPhone(smsRecord.getPhone())
-                .setPhoneExt(smsRecord.getPhoneExt())
-                .setSendTime(smsRecord.getSendTime())
-                .setToken(smsRecord.getToken())
-                .build();
-
-        responseObserver.onNext(response);
+        SmsMessageProto.SmsRecord.Builder response = SmsMessageProto.SmsRecord.newBuilder();
+        ProtobufUtils.merge(smsRecord, response);
+        responseObserver.onNext(response.build());
         responseObserver.onCompleted();
     }
 }

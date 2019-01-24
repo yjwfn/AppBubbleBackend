@@ -36,6 +36,24 @@
       `state`,
       `city`
     </sql>
+
+    <resultMap id="userEntityMap" type="userEntity">
+        <id property="id" column="id" />
+        <result property="nickName" column="nick_name"/>
+        <result property="username" column="username"/>
+        <result property="avatarUrl" column="avatar_url"/>
+        <result property="nickName" column="nick_name"/>
+        <result property="phone" column="phone"/>
+        <result property="phoneExt" column="phone_ext"/>
+        <result property="email" column="email"/>
+        <result property="gender" column="gender"/>
+        <result property="selfSignature" column="self_signature"/>
+        <result property="birthday" column="birthday"/>
+        <result property="status" column="status"/>
+        <result property="country" column="country"/>
+        <result property="state" column="state"/>
+        <result property="city" column="city"/>
+    </resultMap>
     <insert id="insertUser" parameterType="userEntity" >
       INSERT INTO
       <trim prefix="`user`(" suffix=")" suffixOverrides=",">
@@ -110,7 +128,7 @@
     <select id="findByNickNameLike" resultType="userEntity">
       SELECT <include refid="columnsWithoutPassword"/> FROM user WHERE nick_name=#{nickName}
     </select>
-    <select id="findById" resultType="userEntity">
+    <select id="findById" resultType="userEntity" resultMap="userEntityMap">
         SELECT <include refid="columnsWithoutPassword"/> FROM user WHERE `id`=#{id}
     </select>
     <select id="findByPhoneExtAndPhone" resultType="userEntity">

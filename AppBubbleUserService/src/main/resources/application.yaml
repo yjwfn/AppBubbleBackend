@@ -10,3 +10,10 @@ spring:
     username: root
     password: 123456
 
+logging:
+  level:
+    user: trace
+    root: info
+  group:
+   user: com.bubble.user
+

@@ -4,6 +4,8 @@ import io.grpc.BindableService;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import io.grpc.util.TransmitStatusRuntimeExceptionInterceptor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
@@ -15,6 +17,7 @@ import java.util.List;
 @Component
 public class GrpcServerInitializer implements ApplicationRunner {
 
+    private Logger logger = LoggerFactory.getLogger(GrpcServerInitializer.class.getName());
 
     @Autowired
     private List<BindableService> services;
@@ -24,7 +27,8 @@ public class GrpcServerInitializer implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-
+        logger.trace("Start gRPC server.");
+        logger.trace("Found Services {}" , services);
         ServerBuilder serverBuilder = ServerBuilder
                 .forPort(port);
 
@@ -36,6 +40,8 @@ public class GrpcServerInitializer implements ApplicationRunner {
         Server server = serverBuilder.build();
         serverBuilder.intercept(TransmitStatusRuntimeExceptionInterceptor.instance());
         server.start();
+
+        logger.trace("Server running on {}", port);
         startDaemonAwaitThread(server);
     }
 
@@ -45,7 +51,7 @@ public class GrpcServerInitializer implements ApplicationRunner {
             try {
                 server.awaitTermination();
             } catch (InterruptedException e) {
-//                log.error("gRPC server stopped.", e);
+                logger.error("gRPC server stopped.", e);
             }
         });
         awaitThread.setDaemon(false);

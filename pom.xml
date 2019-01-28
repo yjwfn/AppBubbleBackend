@@ -125,6 +125,12 @@
                 <version>${grpc.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>io.grpc</groupId>
+                <artifactId>grpc-core</artifactId>
+                <version>${grpc.version}</version>
+            </dependency>
+
             <!-- Protocol Bufferes -->
             <dependency>
                 <groupId>com.google.protobuf</groupId>

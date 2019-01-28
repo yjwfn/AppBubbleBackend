@@ -13,7 +13,9 @@ spring:
 logging:
   level:
     user: trace
-    root: info
+    root: warn
+    common: trace
   group:
    user: com.bubble.user
+   common: com.bubble.common
 

@@ -1,5 +1,6 @@
 package com.bubble.user.grpc;
 
+import com.bubble.common.exception.TransmitBizExceptionInterceptor;
 import io.grpc.BindableService;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
@@ -37,8 +38,12 @@ public class GrpcServerInitializer implements ApplicationRunner {
                 serverBuilder.addService(bindableService);
             }
         }
-        Server server = serverBuilder.build();
+
+        logger.trace("Register TransmitBizExceptionInterceptor.");
+        serverBuilder.intercept(new TransmitBizExceptionInterceptor());
+        logger.trace("Register TransmitStatusRuntimeExceptionInterceptor.");
         serverBuilder.intercept(TransmitStatusRuntimeExceptionInterceptor.instance());
+        Server server = serverBuilder.build();
         server.start();
 
         logger.trace("Server running on {}", port);

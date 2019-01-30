@@ -20,6 +20,10 @@ static_resources:
              domains:
              - "user"
              - "session"
+             request_headers_to_add:
+             - header:
+                 key: "X-Client"
+                 value: "Envoy"
              routes:
              - match:
                 prefix: "/api/v1/users"

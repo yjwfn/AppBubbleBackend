@@ -5,9 +5,10 @@ import io.grpc.Metadata;
 
 public interface Keys {
 
-    /** A key for persistent value from x-client. */
-    Context.Key<String> CONTEXT_KEY_HEADER_X_CLIENT = Context.key("x-client");
+    /** Get token from header. */
+    Metadata.Key<String> METADATA_KEY_HEADER_AUTHORIZATION = Metadata.Key.of("authorization", Metadata.ASCII_STRING_MARSHALLER);
 
-    /** A key for x-client header.*/
-    Metadata.Key<String> METADATA_KEY_HEADER_X_CLIENT = Metadata.Key.of("x-client", Metadata.ASCII_STRING_MARSHALLER);
+    /** Persistent token to gRPC context.*/
+    Context.Key<String> CONTEXT_KEY_TOKEN =  Context.key("token");
+
 }

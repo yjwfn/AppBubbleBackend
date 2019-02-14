@@ -9,6 +9,7 @@ import com.bubble.user.dto.user.PhoneLoginDto;
 import com.bubble.user.dto.user.UserDto;
 import com.bubble.user.entity.UserEntity;
 import com.bubble.user.enums.UserServiceStatus;
+import com.bubble.user.service.JWTService;
 import com.bubble.user.service.SessionService;
 import com.bubble.user.utils.PasswordUtils;
 import com.google.common.base.Objects;
@@ -22,6 +23,9 @@ public class SessionServiceImpl implements SessionService{
 
     @Autowired
     private UserDao userDao;
+
+    @Autowired
+    private JWTService jwtService;
 
     @Override
     public UserDto loginByOAuth(SocialPlatformOAuthDTO socialPlatformDTO) {
@@ -57,7 +61,12 @@ public class SessionServiceImpl implements SessionService{
             throw BizRuntimeException.from(UserServiceStatus.INCORRECT_PASSWORD, "Incorrect password.");
         }
 
+        UserDto userDto = new UserDto();
+        BeanUtils.copyProperties(userEntity, userDto);
+        String token = jwtService.createUserToken(userDto);
+
         LoginResultDto loginResultDto = new LoginResultDto();
+        loginResultDto.setToken(token);
         BeanUtils.copyProperties(userEntity, loginResultDto);
         return loginResultDto;
     }

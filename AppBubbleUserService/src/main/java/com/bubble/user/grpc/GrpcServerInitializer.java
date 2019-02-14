@@ -1,8 +1,10 @@
 package com.bubble.user.grpc;
 
 import com.bubble.common.exception.TransmitBizExceptionInterceptor;
+import com.google.common.base.Splitter;
 import io.grpc.*;
 import io.grpc.util.TransmitStatusRuntimeExceptionInterceptor;
+import org.apache.logging.log4j.util.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +16,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-import static com.bubble.user.grpc.Keys.CONTEXT_KEY_HEADER_X_CLIENT;
-import static com.bubble.user.grpc.Keys.METADATA_KEY_HEADER_X_CLIENT;
+import static com.bubble.user.grpc.Keys.*;
 
 @Component
 public class GrpcServerInitializer implements ApplicationRunner {
@@ -53,10 +54,16 @@ public class GrpcServerInitializer implements ApplicationRunner {
             public <ReqT, RespT> ServerCall.Listener<ReqT> interceptCall(ServerCall<ReqT, RespT> call, Metadata headers, ServerCallHandler<ReqT, RespT> next) {
                 logger.trace("Receive headers from client {} ", headers);
 
-                String clientValue = headers.get(METADATA_KEY_HEADER_X_CLIENT);
-                logger.trace("Header value {} for key {}", clientValue, CONTEXT_KEY_HEADER_X_CLIENT);
-                Context context = Context.current().withValue(CONTEXT_KEY_HEADER_X_CLIENT, clientValue);
-                logger.trace("Request for host {} ", CONTEXT_KEY_HEADER_X_CLIENT);
+                String headerValue = headers.get(METADATA_KEY_HEADER_AUTHORIZATION);
+                String[] bearer = headerValue != null ? headerValue.split(" ") : null;
+                logger.trace("Header value {} for key {}", headerValue, METADATA_KEY_HEADER_AUTHORIZATION);
+
+                Context context = Context.current();
+                if(bearer != null && bearer.length >= 2 && !Strings.isBlank(bearer[1])){
+                    context = Context.current().withValue(CONTEXT_KEY_TOKEN, bearer[1]);
+                    logger.trace("Token {} ", bearer[1]);
+                }
+
                 return Contexts.interceptCall(context, call,headers, next);
             }
         });

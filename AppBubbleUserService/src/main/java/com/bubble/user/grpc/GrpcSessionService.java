@@ -23,7 +23,6 @@ public class GrpcSessionService extends SessionServiceGrpc.SessionServiceImplBas
     @Override
     public void loginByPhone(SessionServiceProto.LoginByPhone request, StreamObserver<SessionServiceProto.LoginResult> responseObserver) {
         logger.trace("Login by phone {}", request);
-        logger.trace("Request for host {} ", Keys.CONTEXT_KEY_HEADER_X_CLIENT.get());
 
         PhoneLoginDto phoneLoginDto = ProtobufUtils.toBean(request, PhoneLoginDto.class);
         LoginResultDto loginResultDto = sessionService.loginByPhone(phoneLoginDto);

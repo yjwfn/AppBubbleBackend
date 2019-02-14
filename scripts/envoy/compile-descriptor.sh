@@ -3,6 +3,7 @@
 rootProjectDir=../../../AppBubbleBackend
 javaOut=/tmp/protos
 protosDir=$rootProjectDir/protos
+googleapis=/Users/hb/go/src/github.com/googleapis/googleapis
 
 mkdir -p ${javaOut}
 
@@ -10,7 +11,7 @@ protoc  \
     --descriptor_set_out=./app.protobin \
     --include_imports \
     --proto_path=${rootProjectDir}/protos \
-    --proto_path=/Users/yjwfn/go/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis \
+    --proto_path=${googleapis} \
     --proto_path=${HOME}/go/src \
     --java_out=${javaOut} \
     ${rootProjectDir}/protos/sms/SmsMessage.proto \

@@ -1,5 +1,7 @@
 package com.bubble.common.exception.biz;
 
+import com.bubble.common.ResponseProto;
+
 public class BizRuntimeException extends RuntimeException{
 
     private final int status;
@@ -22,6 +24,10 @@ public class BizRuntimeException extends RuntimeException{
 
     public static BizRuntimeException from(int status, String message){
         return new BizRuntimeException(status, message);
+    }
+
+    public static BizRuntimeException from(ResponseProto.Response response){
+        return new BizRuntimeException(response.getCode(), response.getMsg());
     }
 
 

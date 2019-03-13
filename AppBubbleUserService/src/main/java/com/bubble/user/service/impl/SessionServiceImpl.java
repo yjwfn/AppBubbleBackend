@@ -56,7 +56,13 @@ public class SessionServiceImpl implements SessionService{
         }
 
 
-        String decoded = PasswordUtils.decrypt(password, userEntity.getPassword(), userEntity.getPasswordSalt());
+        String decoded = null;
+        try{
+            decoded = PasswordUtils.decrypt(password, userEntity.getPassword(), userEntity.getPasswordSalt());
+        }catch (Exception ignore){
+
+        }
+
         if(!Objects.equal(decoded, password)){
             throw BizRuntimeException.from(UserServiceStatus.INCORRECT_PASSWORD, "Incorrect password.");
         }

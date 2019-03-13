@@ -3,7 +3,7 @@ package sms;
 
 
 import "sms/SmsMessage.proto";
-
+import "common/Response.proto";
 import "google/api/annotations.proto";
 
 option java_package = "com.bubble.sms.grpc.service";
@@ -12,7 +12,7 @@ option java_outer_classname = "SmsServiceProto";
 service SmsService {
 
     //发送注册验证码
-    rpc sendRegistrySms(SendSms) returns (SmsToken) {
+    rpc sendRegistrySms(SendSms) returns (common.Response) {
         option (google.api.http) = {
             post: "/api/v1/sms"
             body: "*"
@@ -20,7 +20,7 @@ service SmsService {
     }
 
     //查找短信发送记录
-    rpc findRecordByToken(SmsToken) returns (SmsRecord) {
+    rpc findRecordByToken(SmsToken) returns (common.Response) {
         option (google.api.http) = {
             get: "/api/v1/sms/{token}"
         };

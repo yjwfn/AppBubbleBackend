@@ -227,6 +227,9 @@
                         <protoSourceRoot>${protos.basedir}</protoSourceRoot>
                         <writeDescriptorSet>true</writeDescriptorSet>
                         <includeDependenciesInDescriptorSet>true</includeDependenciesInDescriptorSet>
+                        <includes combine.children="append" combine.self="append">
+                            <include>common/*.proto</include>
+                        </includes>
                     </configuration>
                     <executions>
                         <execution>

@@ -1,11 +1,13 @@
 package com.bubble.user.grpc;
 
+import com.bubble.common.ResponseProto;
 import com.bubble.common.utils.ProtobufUtils;
 import com.bubble.sms.grpc.session.service.SessionServiceGrpc;
 import com.bubble.sms.grpc.session.service.SessionServiceProto;
 import com.bubble.user.dto.user.LoginResultDto;
 import com.bubble.user.dto.user.PhoneLoginDto;
 import com.bubble.user.service.SessionService;
+import com.google.protobuf.Any;
 import io.grpc.stub.StreamObserver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,8 +22,9 @@ public class GrpcSessionService extends SessionServiceGrpc.SessionServiceImplBas
     @Autowired
     private SessionService sessionService;
 
+
     @Override
-    public void loginByPhone(SessionServiceProto.LoginByPhone request, StreamObserver<SessionServiceProto.LoginResult> responseObserver) {
+    public void loginByPhone(SessionServiceProto.LoginByPhone request, StreamObserver<ResponseProto.Response> responseObserver) {
         logger.trace("Login by phone {}", request);
 
         PhoneLoginDto phoneLoginDto = ProtobufUtils.toBean(request, PhoneLoginDto.class);
@@ -30,7 +33,16 @@ public class GrpcSessionService extends SessionServiceGrpc.SessionServiceImplBas
         SessionServiceProto.LoginResult.Builder loginResultBuilder = SessionServiceProto.LoginResult.newBuilder();
         ProtobufUtils.merge(loginResultDto, loginResultBuilder);
 
-        responseObserver.onNext(loginResultBuilder.build());
+        ResponseProto.Response  response = ResponseProto.Response.newBuilder()
+                .setCode(ResponseProto.Code.SUCCESS_VALUE)
+                .setMsg("ok")
+                .setData(Any.pack(loginResultBuilder.build()))
+                .build();
+
+
+        responseObserver.onNext(response);
         responseObserver.onCompleted();
+
+
     }
 }

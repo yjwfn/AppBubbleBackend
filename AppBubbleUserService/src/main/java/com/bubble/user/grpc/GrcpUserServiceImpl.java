@@ -1,12 +1,11 @@
 package com.bubble.user.grpc;
 
+import com.bubble.common.ResponseProto;
+import com.bubble.common.utils.ResponseHelper;
 import com.bubble.sms.grpc.user.message.UserMessageProto;
 import com.bubble.sms.grpc.user.service.UserServiceGrpc;
-import com.bubble.user.dto.user.LoginResultDto;
-import com.bubble.user.dto.user.PhoneLoginDto;
 import com.bubble.user.dto.user.PhoneRegistryDto;
 import com.bubble.user.dto.user.UserDto;
-import com.bubble.user.service.SessionService;
 import com.bubble.user.service.UserProfileService;
 import com.bubble.user.service.UserService;
 import com.bubble.common.utils.ProtobufUtils;
@@ -25,24 +24,23 @@ public class GrcpUserServiceImpl extends UserServiceGrpc.UserServiceImplBase {
 
 
     @Override
-    public void registryUserWithPhone(UserMessageProto.RegistryWithPhone request, StreamObserver<UserMessageProto.UserProfile> responseObserver) {
+    public void registryUserWithPhone(UserMessageProto.RegistryWithPhone request, StreamObserver<ResponseProto.Response> responseObserver) {
         PhoneRegistryDto phoneRegistryDto = new PhoneRegistryDto(request.getPhoneExt(), request.getPhone(), request.getPassword(), request.getToken(), request.getVerificationCode());
         UserDto userDto = userService.registerWithPhone(phoneRegistryDto);
-
         UserMessageProto.UserProfile.Builder userProfileBuilder = UserMessageProto.UserProfile.newBuilder();
         ProtobufUtils.merge(userDto, userProfileBuilder);
-        responseObserver.onNext(userProfileBuilder.build());
+
+        responseObserver.onNext(ResponseHelper.ok(userProfileBuilder.build()));
         responseObserver.onCompleted();
     }
 
 
     @Override
-    public void getUserProfile(UserMessageProto.UserId request, StreamObserver<UserMessageProto.UserProfile> responseObserver) {
+    public void getUserProfile(UserMessageProto.UserId request, StreamObserver<ResponseProto.Response> responseObserver) {
         UserDto userDto = userProfileService.getUserProfile(request.getUsreId());
         UserMessageProto.UserProfile.Builder builder = UserMessageProto.UserProfile.newBuilder();
         ProtobufUtils.merge(userDto, builder);
-
-        responseObserver.onNext(builder.build());
+        responseObserver.onNext(ResponseHelper.ok(builder.build()));
         responseObserver.onCompleted();
     }
 

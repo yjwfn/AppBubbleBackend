@@ -1,8 +1,10 @@
 syntax = "proto3";
 import "google/api/annotations.proto";
 import "user/UserMessage.proto";
+import "common/Response.proto";
 
 package user;
+
 
 //option java_multiple_files = true;
 option java_package = "com.bubble.sms.grpc.user.service";
@@ -12,14 +14,14 @@ option java_outer_classname = "UserServiceProto";
 service UserService {
 
 
-    rpc registryUserWithPhone(user.RegistryWithPhone) returns (user.UserProfile) {
+    rpc registryUserWithPhone(user.RegistryWithPhone) returns (common.Response) {
         option (google.api.http) = {
             post: "/api/v1/users"
             body: "*"
         };
     }
 
-    rpc getUserProfile(user.UserId) returns (user.UserProfile){
+    rpc getUserProfile(user.UserId) returns (common.Response){
         option (google.api.http) = {
             get: "/api/v1/users/{usreId}"
         };

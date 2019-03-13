@@ -14,6 +14,8 @@ public interface ServiceStatus {
     /** 资源已经存在 */
     int ALREADY_EXISTS = -3;
 
+    int UNKNOWN = -4;
+
     default boolean isSuccess(int code){
         return code == SUCCESS;
     }

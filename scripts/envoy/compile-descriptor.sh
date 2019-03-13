@@ -18,5 +18,6 @@ protoc  \
     ${rootProjectDir}/protos/sms/SmsService.proto \
     ${rootProjectDir}/protos/user/UserMessage.proto \
     ${rootProjectDir}/protos/user/UserService.proto \
-    ${rootProjectDir}/protos/user/SessionService.proto
+    ${rootProjectDir}/protos/user/SessionService.proto \
+    ${rootProjectDir}/protos/common/Response.proto
 

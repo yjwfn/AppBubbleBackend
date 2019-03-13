@@ -1,9 +1,11 @@
 package com.bubble.user.service.impl;
 
+import com.bubble.common.ResponseProto;
 import com.bubble.common.exception.biz.BizRuntimeException;
 import com.bubble.common.exception.biz.ServiceStatus;
 import com.bubble.common.snowflake.SequenceGenerator;
 import com.bubble.common.utils.PhoneUtils;
+import com.bubble.common.utils.ResponseHelper;
 import com.bubble.sms.grpc.message.SmsMessageProto;
 import com.bubble.sms.grpc.service.SmsServiceGrpc;
 import com.bubble.user.dao.UserDao;
@@ -16,16 +18,19 @@ import com.bubble.user.utils.PasswordUtils;
 import com.bubble.user.utils.UserUtils;
 import com.google.common.base.Objects;
 import com.google.common.base.Strings;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService{
+
+    private final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class.getName());
 
     @Autowired
     private UserDao userDao;
@@ -69,12 +74,12 @@ public class UserServiceImpl implements UserService{
 
 
 
-        SmsMessageProto.SmsRecord smsRecord = smsServiceBlockingStub.findRecordByToken(smsToken);smsRecord.isInitialized();
-//        if(smsRecord == null){
-//            throw BizRuntimeException
-//                    .from(UserServiceStatus.BAD_REQUEST, "Invalid ");
-//
-//        }
+        ResponseProto.Response response = smsServiceBlockingStub.findRecordByToken(smsToken);
+        if(!ResponseHelper.isSuccessful(response)){
+            throw BizRuntimeException.from(response);
+        }
+
+        SmsMessageProto.SmsRecord smsRecord = ResponseHelper.unpack(response, SmsMessageProto.SmsRecord.class);
         /*
             手机号或验证码未匹配。
          */
@@ -150,12 +155,16 @@ public class UserServiceImpl implements UserService{
             throw BizRuntimeException.from(ServiceStatus.BAD_REQUEST, "The verification field code must not be null.");
         }
 
+
         SmsMessageProto.SmsToken smsToken = SmsMessageProto.SmsToken
                 .newBuilder()
                 .setToken(token)
                 .build();
 
-        SmsMessageProto.SmsRecord smsRecord = smsServiceBlockingStub.findRecordByToken(smsToken);
+        ResponseProto.Response response = smsServiceBlockingStub.findRecordByToken(smsToken);
+        ResponseHelper.checkResponse(response);
+
+        SmsMessageProto.SmsRecord smsRecord = ResponseHelper.unpack(response, SmsMessageProto.SmsRecord.class);
         if(smsRecord == null){
             throw BizRuntimeException.from(ServiceStatus.BAD_REQUEST, "Not found verification code for phone");
         }
@@ -309,7 +318,10 @@ public class UserServiceImpl implements UserService{
                 .setToken(token)
                 .build();
 
-        SmsMessageProto.SmsRecord smsRecord = smsServiceBlockingStub.findRecordByToken(smsToken);
+        ResponseProto.Response response  = smsServiceBlockingStub.findRecordByToken(smsToken);
+        ResponseHelper.checkResponse(response);
+        SmsMessageProto.SmsRecord smsRecord = ResponseHelper.unpack(response, SmsMessageProto.SmsRecord.class);
+
         if(smsRecord == null){
             throw BizRuntimeException.from(ServiceStatus.BAD_REQUEST, "The verification code does not exists..");
         }

@@ -1,5 +1,6 @@
 syntax = "proto3";
 import "google/api/annotations.proto";
+import "common/Response.proto";
 
 package session;
 
@@ -10,7 +11,7 @@ option java_outer_classname = "SessionServiceProto";
 
 service SessionService {
 
-    rpc loginByPhone(session.LoginByPhone) returns (session.LoginResult){
+    rpc loginByPhone(session.LoginByPhone) returns (common.Response){
         option (google.api.http) = {
             post: "/api/v1/session"
             body: "*"

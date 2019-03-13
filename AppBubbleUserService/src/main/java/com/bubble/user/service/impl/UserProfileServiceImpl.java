@@ -24,6 +24,21 @@ public class UserProfileServiceImpl implements UserProfileService{
 
     @Override
     public UserDetailDto getUserDetail(Long myUserId, Long otherUserId) {
+        if (myUserId == null) {
+            throw BizRuntimeException.from(ServiceStatus.BAD_REQUEST, "User id must not be null.");
+        }
+
+        if (otherUserId == null) {
+            throw BizRuntimeException.from(ServiceStatus.BAD_REQUEST, "User id must not be null.");
+        }
+
+        UserEntity userEntity = userDao.findById(otherUserId);
+        if (userEntity == null) {
+            throw BizRuntimeException.from(ServiceStatus.NOT_FOUND, "Not found user.");
+        }
+
+        UserDto userDto = new UserDto();
+
         return null;
     }
 

@@ -1,0 +1,63 @@
+syntax = "proto3";
+import "google/api/annotations.proto";
+
+package user.relation;
+
+//option java_multiple_files = true;
+option java_package = "com.bubble.grpc.user.relation.service";
+option java_outer_classname = "UserRelationProto";
+//option objc_class_prefix = "HLW";
+
+
+service UserRelationService {
+    rpc findFollowerByUserId(user.relation.UserId) returns (user.relation.UserRelation) {
+        option (google.api.http) = {
+                post: "/api/v1/relations/followres/{userId}"
+                body: "*"
+            };
+    }
+
+
+    rpc findUserByFollowerId(user.relation.UserId) returns (user.relation.UserRelation) {
+        option (google.api.http) = {
+                post: "/api/v1/relations/following/{userId}"
+                body: "*"
+            };
+    }
+
+    rpc createRelation(user.relation.UserRelation) returns (user.relation.UserRelation) {
+        option (google.api.http) = {
+                post: "/api/v1/relations"
+                body: "*"
+            };
+    }
+
+
+    rpc deleteRelation(user.relation.UserRelation) returns (user.relation.UserRelation) {
+        option (google.api.http) = {
+                post: "/api/v1/relations/users/{usreId}"
+                body: "*"
+            };
+    }
+}
+
+message UserId {
+    uint64 userId = 1;
+}
+
+message UserRelation {
+    uint64 id = 1;
+    uint64 followerId = 2;
+    string followerNickname = 3;
+    string followerSelfSignature = 4;
+    string followerAvatarUrl = 5;
+
+    uint64 userId = 6;
+    string userNickname = 7;
+    string userSelfSignature = 8;
+    string userAvatarUrl = 9;
+}
+
+message UserRelationList {
+//    message user.relation.UserRelation relationList = 1;
+}

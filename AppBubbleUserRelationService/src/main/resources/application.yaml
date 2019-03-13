@@ -1,0 +1,35 @@
+server:
+  port: 8080
+
+# gRPC
+grpc:
+ server:
+  port: 8090
+
+# Spring
+spring:
+  application:
+    name: AppBubbleUserRelationService
+  messages:
+    basename: i18n/messages
+    encoding: UTF-8
+  redis:
+    host: redis-dev
+
+
+# Apollo
+#app:
+# id: 1547393624
+#
+#apollo:
+# bootstrap:
+#  enabled: true
+#  namespaces: application
+
+
+# Mybatis
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+
+
+

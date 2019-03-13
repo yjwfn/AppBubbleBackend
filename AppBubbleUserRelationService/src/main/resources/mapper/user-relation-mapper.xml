@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bubble.user.relation.dao.UserRelationDao" >
+    <sql id="columns">
+      `id`,
+      `follower_id`,
+      `follower_nickname`,
+      `follower_self_signature`,
+      `follower_avatar_url`,
+      `user_id`,
+      `user_nickname`,
+      `user_self_signature`,
+      `user_avatar_url`,
+    </sql>
+  <insert id="createRelation">
+    INSERT INTO
+    <trim prefix=" `user_relation` (" suffix=")" suffixOverrides=",">
+      <if test="id != null">`id`,</if>
+      <if test="followerId != null">`follower_id`,</if>
+      <if test="followerNickname != null">`follower_nick_name`,</if>
+      <if test="followerSelfSignature != null">`follower_self_signature`</if>
+      <if test="followerAvatarUrl != null">`follower_avatar_url`</if>
+      <if test="userId != null">`user_id`,</if>
+      <if test="userNickname != null">`user_nickname`,</if>
+      <if test="userSelfSignature != null">`user_self_signature`</if>
+      <if test="userAvatarUrl != null">`user_avatar_url`</if>
+    </trim>
+
+    <trim prefix="VALUES(" suffix=")" suffixOverrides=",">
+      <if test="id != null">#{id},</if>
+      <if test="followerId != null">#{followerId},</if>
+      <if test="followerNickname != null">#{followerNickname},</if>
+      <if test="followerSelfSignature != null">#{followerSelfSignature}</if>
+      <if test="userId != null">#{userId},</if>
+      <if test="userNickname != null">#{userNickname},</if>
+      <if test="userSelfSignature != null">#{userSelfSignature}</if>
+      <if test="userAvatarUrl != null">#{userAvatarUrl}</if>
+    </trim>
+  </insert>
+  <delete id="deleteRelation">
+    DELETE FROM `user_relation` WHERE #{userId} = `user_id` AND #{followerId} = `follower_id`
+  </delete>
+  <select id="findFollowerByUserId" resultType="com.bubble.user.relation.entity.UserRelationEntity">
+    SELECT <include refid="columns"/> FROM `user_relation` WHERE #{userId} = `user_id`
+  </select>
+  <select id="findUserByFollowerId" resultType="com.bubble.user.relation.entity.UserRelationEntity">
+    SELECT <include refid="columns"/> FROM `user_relation` WHERE #{followerId} = `follower_id`
+  </select>
+
+
+</mapper>

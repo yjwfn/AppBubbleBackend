@@ -18,4 +18,3 @@ logging:
   group:
    user: com.bubble.user
    common: com.bubble.common
-

@@ -21,6 +21,7 @@
     </modules>
 
     <properties>
+        <!--suppress UnresolvedMavenProperty -->
         <GOPATH>${HOME}/go</GOPATH>
 
         <jarName>${project.artifactId}-${project.version}</jarName>
@@ -196,6 +197,11 @@
                 <version>${jackson.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper-spring-boot-starter</artifactId>
+                <version>1.2.10</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

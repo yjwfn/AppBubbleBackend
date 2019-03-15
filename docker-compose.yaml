@@ -22,15 +22,41 @@ services:
 
 #========== ELK  ========
  logstash:
-  image: docker.elastic.co/logstash/logstash:6.6.2
+  image: logstash:6.6.2
   expose:
     - "4560"
   volumes:
     - ./scripts/elk/logstash/pipeline:/usr/share/logstash/pipeline/
     - ./scripts/elk/logstash/logstash.yaml:/usr/share/logstash/config/logstash.yml
+  depends_on:
+    - elasticsearch
+
+ elasticsearch:
+  image: elasticsearch:6.6.2
+  volumes:
+   - ./scripts/elk/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+  environment:
+   - bootstrap.memory_lock=true
+   - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+  ulimits:
+   memlock:
+    soft: -1
+    hard: -1
+  expose:
+    - 9200
+    - 9300
+
+ kibana:
+  image: kibana:6.6.2
+  volumes:
+   - ./scripts/elk/kibana/kibana.yml:/usr/share/kibana/config/kibana.yml
+  expose:
+    - 5601
+  ports:
+    - "5601:5601"
 
 
-   #========== Apollo ===============
+#========== Apollo ===============
  apollo-configservice-dev:
     image: rcntech/apollo-configservice:v1.2.0
     environment:

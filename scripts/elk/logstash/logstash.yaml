@@ -1,0 +1,8 @@
+config:
+  debug: true
+  reload:
+#   automatic: true
+   interval: "3s"
+
+log:
+  level: "debug"

@@ -20,7 +20,17 @@ services:
   volumes:
       - ./scripts/sql:/sql
 
-#========== Apollo ===============
+#========== ELK  ========
+ logstash:
+  image: docker.elastic.co/logstash/logstash:6.6.2
+  expose:
+    - "4560"
+  volumes:
+    - ./scripts/elk/logstash/pipeline:/usr/share/logstash/pipeline/
+    - ./scripts/elk/logstash/logstash.yaml:/usr/share/logstash/config/logstash.yml
+
+
+   #========== Apollo ===============
  apollo-configservice-dev:
     image: rcntech/apollo-configservice:v1.2.0
     environment:
@@ -78,6 +88,7 @@ services:
 #   - "apollo-portal"
 #   - "mysql-dev"
    - "redis-dev"
+   - "logstash"
  user:
   build:
     context: ./
@@ -96,4 +107,5 @@ services:
   depends_on:
 #    - "apollo-portal"
     - "mysql-dev"
+    - "logstash"
 

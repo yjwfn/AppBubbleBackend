@@ -8,8 +8,18 @@
         </encoder>
     </appender>
 
+    <appender name="logstash" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+        <destination>logstash:4560</destination>
 
-    <root level="debug">
+        <!-- encoder is required -->
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder" />
+    </appender>
+
+    <root level="TRACE">
         <appender-ref ref="STDOUT" />
+        <appender-ref ref="logstash"/>
     </root>
+
+    <logger name="com.bubble.user" />
+    <logger name="com.bubble.common" />
 </configuration>

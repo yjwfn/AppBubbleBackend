@@ -9,12 +9,3 @@ spring:
     url: jdbc:mysql://mysql-dev:3306/bubble_video?characterEncoding=utf8
     username: root
     password: 123456
-
-logging:
-  level:
-    user: trace
-    root: warn
-    common: trace
-  group:
-   user: com.bubble.user
-   common: com.bubble.common

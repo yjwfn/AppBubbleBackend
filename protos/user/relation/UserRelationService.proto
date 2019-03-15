@@ -1,5 +1,6 @@
 syntax = "proto3";
 import "google/api/annotations.proto";
+import  "common/Response.proto";
 
 package user.relation;
 
@@ -10,22 +11,22 @@ option java_outer_classname = "UserRelationProto";
 
 
 service UserRelationService {
-    rpc findFollowerByUserId(user.relation.UserId) returns (user.relation.UserRelation) {
+    rpc findFollowerByUserId(user.relation.UserId) returns (common.Response) {
         option (google.api.http) = {
-                post: "/api/v1/relations/followres/{userId}"
+                post: "/api/v1/relations/followers/{userId}"
                 body: "*"
             };
     }
 
 
-    rpc findUserByFollowerId(user.relation.UserId) returns (user.relation.UserRelation) {
+    rpc findUserByFollowerId(user.relation.UserId) returns (common.Response) {
         option (google.api.http) = {
                 post: "/api/v1/relations/following/{userId}"
                 body: "*"
             };
     }
 
-    rpc createRelation(user.relation.UserRelation) returns (user.relation.UserRelation) {
+    rpc createRelation(user.relation.UserRelation) returns (common.Response) {
         option (google.api.http) = {
                 post: "/api/v1/relations"
                 body: "*"
@@ -33,12 +34,15 @@ service UserRelationService {
     }
 
 
-    rpc deleteRelation(user.relation.UserRelation) returns (user.relation.UserRelation) {
+    rpc deleteRelation(user.relation.UserRelation) returns (common.Response) {
         option (google.api.http) = {
-                post: "/api/v1/relations/users/{usreId}"
+                post: "/api/v1/relations"
                 body: "*"
             };
     }
+}
+message RelationId{
+    uint64 id = 1;
 }
 
 message UserId {

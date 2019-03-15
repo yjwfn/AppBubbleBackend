@@ -19,5 +19,6 @@ protoc  \
     ${rootProjectDir}/protos/user/UserMessage.proto \
     ${rootProjectDir}/protos/user/UserService.proto \
     ${rootProjectDir}/protos/user/SessionService.proto \
-    ${rootProjectDir}/protos/common/Response.proto
+    ${rootProjectDir}/protos/user/relation/UserRelationService.proto \
+    ${rootProjectDir}/protos/common/Response.proto \
 

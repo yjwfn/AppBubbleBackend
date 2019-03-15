@@ -18,6 +18,7 @@
         <module>AppBubbleSmsService</module>
         <module>AppBubbleCommon</module>
         <module>AppBubbleUserService</module>
+        <module>AppBubbleUserRelationService</module>
     </modules>
 
     <properties>

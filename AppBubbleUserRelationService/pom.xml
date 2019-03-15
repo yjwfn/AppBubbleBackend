@@ -85,7 +85,10 @@
             <artifactId>mybatis-spring-boot-starter</artifactId>
         </dependency>
 
-
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
@@ -103,6 +106,7 @@
                     <includes>
                         <include>${project.artifactId}/*.proto</include>
                         <include>sms/*.proto</include>
+                        <include>user/relation/*.proto</include>
                     </includes>
                 </configuration>
             </plugin>

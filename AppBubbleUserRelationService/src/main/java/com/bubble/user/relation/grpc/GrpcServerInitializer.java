@@ -1,5 +1,6 @@
 package com.bubble.user.relation.grpc;
 
+import com.bubble.common.grcp.AbstractGrpcServerInitializer;
 import io.grpc.BindableService;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class GrpcServerInitializer implements ApplicationRunner {
+public class GrpcServerInitializer extends AbstractGrpcServerInitializer implements ApplicationRunner {
 
 
     @Autowired
@@ -22,33 +23,20 @@ public class GrpcServerInitializer implements ApplicationRunner {
     @Value("${grpc.server.port:8090}")
     private int port;
 
+
+
     @Override
-    public void run(ApplicationArguments args) throws Exception {
-
-        ServerBuilder serverBuilder = ServerBuilder
-                .forPort(port);
-
-        if (services != null && !services.isEmpty()) {
-            for (BindableService bindableService : services) {
-                serverBuilder.addService(bindableService);
-            }
-        }
-        Server server = serverBuilder.build();
-        serverBuilder.intercept(TransmitStatusRuntimeExceptionInterceptor.instance());
-        server.start();
-        startDaemonAwaitThread(server);
+    public List<BindableService> getServices() {
+        return services;
     }
 
+    @Override
+    public int getPort() {
+        return port;
+    }
 
-    private void startDaemonAwaitThread(Server server) {
-        Thread awaitThread = new Thread(() -> {
-            try {
-                server.awaitTermination();
-            } catch (InterruptedException e) {
-//                log.error("gRPC server stopped.", e);
-            }
-        });
-        awaitThread.setDaemon(false);
-        awaitThread.start();
+    @Override
+    public void run(ApplicationArguments args) throws Exception {
+        start();
     }
 }

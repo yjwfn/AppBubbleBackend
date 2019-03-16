@@ -11,37 +11,50 @@ option java_outer_classname = "UserRelationProto";
 
 
 service UserRelationService {
-    rpc findFollowerByUserId(user.relation.UserId) returns (common.Response) {
+    rpc getFollowersByUserId(user.relation.UserId) returns (common.Response) {
         option (google.api.http) = {
-                post: "/api/v1/relations/followers/{userId}"
+                get: "/api/v1/relations/{userId}/followers"
+            };
+    }
+
+
+    rpc findUsersByFollowerId(user.relation.UserId) returns (common.Response) {
+        option (google.api.http) = {
+                get: "/api/v1/relations/{userId}/following"
+            };
+    }
+
+    rpc follow(user.relation.FollowArgs) returns (common.Response) {
+        option (google.api.http) = {
+                post: "/api/v1/relations/{userId}"
                 body: "*"
             };
     }
 
 
-    rpc findUserByFollowerId(user.relation.UserId) returns (common.Response) {
+    rpc unfollow(user.relation.UnfollowArgs) returns (common.Response) {
         option (google.api.http) = {
-                post: "/api/v1/relations/following/{userId}"
-                body: "*"
-            };
-    }
-
-    rpc createRelation(user.relation.UserRelation) returns (common.Response) {
-        option (google.api.http) = {
-                post: "/api/v1/relations"
-                body: "*"
-            };
-    }
-
-
-    rpc deleteRelation(user.relation.UserRelation) returns (common.Response) {
-        option (google.api.http) = {
-                post: "/api/v1/relations"
+                post: "/api/v1/relations/{userId}/following/{followBy}"
                 body: "*"
             };
     }
 }
-message RelationId{
+
+message FollowArgs {
+    uint64 userId = 1;
+    uint64 followBy = 2;
+}
+
+message UnfollowArgs {
+    uint64 userId = 1;
+    uint64 followBy = 2;
+}
+
+message RelationList {
+    repeated user.relation.UserRelation relation = 1;
+}
+
+message RelationId {
     uint64 id = 1;
 }
 
@@ -60,8 +73,4 @@ message UserRelation {
     string userNickname = 7;
     string userSelfSignature = 8;
     string userAvatarUrl = 9;
-}
-
-message UserRelationList {
-//    message user.relation.UserRelation relationList = 1;
 }

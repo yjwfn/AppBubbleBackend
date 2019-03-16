@@ -3,7 +3,7 @@
 rootProjectDir=../../../AppBubbleBackend
 javaOut=/tmp/protos
 protosDir=$rootProjectDir/protos
-googleapis=/Users/hb/go/src/github.com/googleapis/googleapis
+googleapis=$rootProjectDir/protos/googleapis
 
 mkdir -p ${javaOut}
 

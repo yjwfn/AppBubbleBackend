@@ -1,0 +1,55 @@
+# This is an API workspace, having public visibility by default makes perfect sense.
+package(default_visibility = ["//visibility:public"])
+
+##############################################################################
+# Common
+##############################################################################
+load("@com_google_api_codegen//rules_gapic:gapic.bzl", "proto_library_with_info")
+
+proto_library(
+    name = "source_proto",
+    srcs = ["source_context.proto"],
+    deps = [
+        "//google/api:annotations_proto",
+    ],
+)
+
+proto_library_with_info(
+    name = "source_proto_with_info",
+    deps = [":source_proto"],
+)
+
+##############################################################################
+# Java
+##############################################################################
+java_proto_library(
+    name = "source_java_proto",
+    deps = [
+        ":source_proto",
+    ],
+)
+
+##############################################################################
+# Go
+##############################################################################
+load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
+load("@com_google_api_codegen//rules_gapic/go:go_gapic_pkg.bzl", "go_gapic_assembly_pkg")
+
+go_proto_library(
+    name = "source_go_proto",
+    importpath = "google.golang.org/genproto/googleapis/devtools/source/v1",
+    protos = [
+        ":source_proto_with_info",
+    ],
+    deps = [
+        "//google/api:annotations_go_proto",
+    ]
+)
+
+# Opensource Packages
+go_gapic_assembly_pkg(
+    name = "gapi-cloud-source-v1-go",
+    deps = [
+        ":source_go_proto",
+    ],
+)

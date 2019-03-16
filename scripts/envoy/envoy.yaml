@@ -44,6 +44,14 @@ static_resources:
                 prefix: "/api/v1/sms"
                route:
                 cluster: sms_services
+           - name: relation
+             domains: ["relation"]
+             routes:
+             - match:
+                prefix: "/api/v1/relations"
+#                grpc: {}
+               route:
+                cluster: user_relation_services
          http_filters:
          - name: envoy.grpc_json_transcoder
            config:
@@ -52,6 +60,7 @@ static_resources:
               - "sms.SmsService"
               - "user.UserService"
               - "session.SessionService"
+              - "user.relation.UserRelationService"
              match_incoming_request_route: true
              print_options:
               add_whitespace: true
@@ -78,3 +87,10 @@ static_resources:
    http2_protocol_options: {}
    hosts: [{ socket_address: { address: user, port_value: 8090 }}]
 
+ - name: user_relation_services
+   connect_timeout: 5s
+   type: LOGICAL_DNS
+   dns_lookup_family: V4_ONLY
+   lb_policy: ROUND_ROBIN
+   http2_protocol_options: {}
+   hosts: [{ socket_address: { address: relation, port_value: 8090 }}]

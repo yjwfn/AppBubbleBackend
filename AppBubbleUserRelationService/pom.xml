@@ -105,7 +105,6 @@
                 <configuration>
                     <includes>
                         <include>${project.artifactId}/*.proto</include>
-                        <include>sms/*.proto</include>
                         <include>user/relation/*.proto</include>
                     </includes>
                 </configuration>

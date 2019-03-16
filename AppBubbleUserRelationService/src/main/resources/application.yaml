@@ -1,21 +1,16 @@
-server:
-  port: 8080
-
 # gRPC
 grpc:
  server:
   port: 8090
 
-# Spring
+
 spring:
+  datasource:
+    url: jdbc:mysql://mysql-dev:3306/bubble_video?characterEncoding=utf8
+    username: root
+    password: 123456
   application:
     name: AppBubbleUserRelationService
-  messages:
-    basename: i18n/messages
-    encoding: UTF-8
-  redis:
-    host: redis-dev
-
 
 # Apollo
 #app:
@@ -30,6 +25,6 @@ spring:
 # Mybatis
 mybatis:
   mapper-locations: classpath:mapper/*.xml
-
+  type-aliases-package: com.bubble.user.relation.entity
 
 

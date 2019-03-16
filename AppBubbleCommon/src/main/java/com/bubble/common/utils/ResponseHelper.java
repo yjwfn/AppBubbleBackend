@@ -51,11 +51,15 @@ public final class ResponseHelper {
      * @return
      */
     public static ResponseProto.Response ok(Message message){
-        return ResponseProto.Response.newBuilder()
+        ResponseProto.Response.Builder builder =  ResponseProto.Response.newBuilder()
                 .setCode(ResponseProto.Code.SUCCESS_VALUE)
-                .setData(Any.pack(message))
-                .setMsg("ok")
-                .build();
+                .setMsg("ok");
+
+        if (message != null) {
+            builder.setData(Any.pack(message));
+        }
+
+        return builder.build();
     }
 
 

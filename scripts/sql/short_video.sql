@@ -53,10 +53,10 @@ CREATE TABLE  IF NOT EXISTS `user_relation` (
 `follower_nick_name` varchar(20)  NOT NULL DEFAULT '' COMMENT '关注者名称',
 `follower_avatar_url` varchar(255)  NOT NULL DEFAULT '' COMMENT '关注者头像',
 `follower_self_signature` varchar(255)  COMMENT '关注者用户个性签名',
-`following_id` bigint(20) UNSIGNED NOT NULL DEFAULT 0 COMMENT '关注的用户ID',
-`following_nick_name` varchar(20)   NOT NULL DEFAULT '' COMMENT '关注的用户名称',
-`following_avatar_url` varchar(255)    NOT NULL DEFAULT '' COMMENT '关注的用户头像',
-`following_self_signature` varchar(255)  COMMENT '关注的用户个性签名'
+`user_id` bigint(20) UNSIGNED NOT NULL DEFAULT 0 COMMENT '关注的用户ID',
+`user_nick_name` varchar(20)   NOT NULL DEFAULT '' COMMENT '关注的用户名称',
+`user_avatar_url` varchar(255)    NOT NULL DEFAULT '' COMMENT '关注的用户头像',
+`user_self_signature` varchar(255)  COMMENT '关注的用户个性签名'
 -- `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '记录创建时间',
 -- `modify_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '记录修改的时间',
 -- `creator_id` bigint(20) UNSIGNED NOT NULL DEFAULT 0 COMMENT '记录创建者ID（0为无）',

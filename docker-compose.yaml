@@ -112,7 +112,7 @@ services:
    - "8090"
   depends_on:
 #   - "apollo-portal"
-#   - "mysql-dev"
+#   - " "
    - "redis-dev"
    - "logstash"
  user:
@@ -124,6 +124,26 @@ services:
   environment:
    APOLLO_META: "http://apollo-configservice-dev:8080"
    APP_PROJECT_NAME: "AppBubbleUserService"
+   ENV: dev
+
+  expose:
+   - "8080"
+   - "8090"
+
+  depends_on:
+#    - "apollo-portal"
+    - "mysql-dev"
+    - "logstash"
+
+ relation:
+  build:
+    context: ./
+    dockerfile: scripts/docker/Dockerfile
+    args:
+      APP_PROJECT_NAME: "AppBubbleUserRelationService"
+  environment:
+   APOLLO_META: "http://apollo-configservice-dev:8080"
+   APP_PROJECT_NAME: "AppBubbleUserRelationService"
    ENV: dev
 
   expose:

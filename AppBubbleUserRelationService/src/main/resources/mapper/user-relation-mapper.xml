@@ -4,14 +4,27 @@
     <sql id="columns">
       `id`,
       `follower_id`,
-      `follower_nickname`,
+      `follower_nick_name`,
       `follower_self_signature`,
       `follower_avatar_url`,
       `user_id`,
-      `user_nickname`,
+      `user_nick_name`,
       `user_self_signature`,
-      `user_avatar_url`,
+      `user_avatar_url`
     </sql>
+  
+  <resultMap id="userRelation" type="userRelationEntity">
+    <result column="id" property="id"/>
+    <result column="follower_id" property="followerId"/>
+    <result column="follower_nick_name" property="followerNickname"/>
+    <result column="follower_self_signature" property="followerSelfSignature"/>
+    <result column="follower_avatar_url" property="followerAvatarUrl"/>
+    <result column="user_id" property="userId"/>
+    <result column="user_nick_name" property="userNickname"/>
+    <result column="user_self_signature" property="userSelfSignature"/>
+    <result column="user_avatar_url" property="userAvatarUrl"/>
+  </resultMap>
+
   <insert id="createRelation">
     INSERT INTO
     <trim prefix=" `user_relation` (" suffix=")" suffixOverrides=",">
@@ -21,7 +34,7 @@
       <if test="followerSelfSignature != null">`follower_self_signature`</if>
       <if test="followerAvatarUrl != null">`follower_avatar_url`</if>
       <if test="userId != null">`user_id`,</if>
-      <if test="userNickname != null">`user_nickname`,</if>
+      <if test="userNickname != null">`user_nick_name`,</if>
       <if test="userSelfSignature != null">`user_self_signature`</if>
       <if test="userAvatarUrl != null">`user_avatar_url`</if>
     </trim>
@@ -38,14 +51,18 @@
     </trim>
   </insert>
   <delete id="deleteRelation">
-    DELETE FROM `user_relation` WHERE #{userId} = `user_id` AND #{followerId} = `follower_id`
+    DELETE FROM `user_relation` WHERE `user_id`=#{userId} AND `follower_id`=#{followerId}
   </delete>
-  <select id="findFollowerByUserId" resultType="com.bubble.user.relation.entity.UserRelationEntity">
-    SELECT <include refid="columns"/> FROM `user_relation` WHERE #{userId} = `user_id`
+  <select id="findFollowerByUserId" resultType="userRelationEntity" resultMap="userRelation">
+    SELECT <include refid="columns"/> FROM `user_relation` WHERE `user_id`=#{userId}
   </select>
-  <select id="findUserByFollowerId" resultType="com.bubble.user.relation.entity.UserRelationEntity">
-    SELECT <include refid="columns"/> FROM `user_relation` WHERE #{followerId} = `follower_id`
+  <select id="findUserByFollowerId" resultType="userRelationEntity" resultMap="userRelation">
+    SELECT <include refid="columns"/> FROM `user_relation` WHERE `follower_id`=#{followerId}
   </select>
+    <select id="isExists" resultType="java.lang.Boolean">
+      SELECT COUNT(id) FROM `user_relation` WHERE `user_id`=#{userId} AND `follower_id`=#{followerId}
+    </select>
 
 
 </mapper>
+

@@ -10,10 +10,10 @@ public interface UserRelationDao {
 
     /**
      * 查询已经关注{@code  userId}的信息。
-     * @param followingId
+     * @param userId
      * @return
      */
-    List<UserRelationEntity> findFollowerByUserId(Long followingId);
+    List<UserRelationEntity> findFollowerByUserId(Long userId);
 
     /**
      * 查询{@code followerId}关注的人。
@@ -32,8 +32,16 @@ public interface UserRelationDao {
 
     /**
      * 取消关注
-     * @param followingId 被关注的人
+     * @param userId 被关注的人
      * @param followerId 关注者
      */
-    void deleteRelation(Long followingId, Long followerId);
+    void deleteRelation(Long userId, Long followerId);
+
+    /**
+     * 判断关系是否存在
+     * @param userId
+     * @param followerId
+     * @return
+     */
+    boolean isExists(Long userId, Long followerId );
 }

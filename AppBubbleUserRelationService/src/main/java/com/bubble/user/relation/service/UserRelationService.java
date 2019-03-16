@@ -14,21 +14,21 @@ public interface UserRelationService {
      * @param userId
      * @return
      */
-    List<UserRelationDto> findFollowerByUserId(Long userId);
+    List<UserRelationDto> findFollowersByUserId(Long userId);
 
     /**
      * 查询{@code followerId}关注的人。
      * @param followerId
      * @return
      */
-    List<UserRelationDto> findUserByFollowerId(Long followerId);
+    List<UserRelationDto> findUsersByFollowerId(Long followerId);
 
 
     /**
      * 创建一条关注记录
      * @return
      */
-    void createRelation(UserRelationDto userRelationDto);
+    void follow(UserRelationDto userRelationDto);
 
 
     /**
@@ -36,5 +36,5 @@ public interface UserRelationService {
      * @param userId 被关注的人
      * @param followerId 关注者
      */
-    void deleteRelation(Long userId, Long followerId);
+    void unfollow(Long userId, Long followerId);
 }

@@ -11,6 +11,10 @@ static_resources:
    - filters:
      - name: envoy.http_connection_manager
        config:
+         access_log:
+           - name: envoy.file_access_log
+             config:
+               path: "/dev/stdout"
          stat_prefix: bubble_http
          codec_type: AUTO
          route_config:
